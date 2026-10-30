@@ -1,0 +1,79 @@
+{
+ "inputs": [
+  "log_seq_length",
+  "scd_pos",
+  "scd_neg",
+  "shd",
+  "contact_energy",
+  "fcr",
+  "patch_neg",
+  "patch_neu",
+  "frac_sticky"
+ ],
+ "input_mean": [
+  5.04921381513801,
+  0.2998393930898796,
+  -0.01624069768761198,
+  5.527187095715176,
+  -0.008127284005462454,
+  0.34166888144096114,
+  0.03677683572099653,
+  0.45608038929650246,
+  0.2094494643905918
+ ],
+ "input_sd": [
+  0.7071814858143244,
+  0.49413672587545154,
+  0.05040400219806311,
+  1.044948941695707,
+  0.8741725298582413,
+  0.13774173256188965,
+  0.07132539641025505,
+  0.17300765082463263,
+  0.09271229038099757
+ ],
+ "law_covariates": [
+  "1",
+  "nu",
+  "nu^2",
+  "1/N",
+  "mean_hydro",
+  "scd_pos"
+ ],
+ "law": [
+  0.5398329752062869,
+  2.081476318935865,
+  -1.345047512462664,
+  13.534128219301003,
+  -0.35912060569564924,
+  0.14554400325527586
+ ],
+ "b_S": -1.6461683934488764,
+ "u_0": -0.36219959689997,
+ "nu_F": 0.57874,
+ "width": 512,
+ "depth": 2,
+ "activation": "gelu",
+ "epochs": 40,
+ "seed": 42,
+ "n_fit": 3223,
+ "n_parameters": 268808,
+ "training": {
+  "proteins": "training split (3,223 proteins)",
+  "loss": "mean negative log-likelihood per MD frame (density in Rg)",
+  "frames_per_protein": 1024,
+  "batch": 64,
+  "epochs": 40,
+  "optimizer": "AdamW",
+  "learning_rate": 0.001,
+  "schedule": "cosine decay to 0",
+  "weight_decay": 0.0001,
+  "gradient_clip": 1.0,
+  "dtype": "float64",
+  "checkpoint": "last epoch",
+  "command": "idprg train --split standard --seed 42"
+ },
+ "sha256": {
+  "network.eqx": "bd757251f3dc614c95edfeabafe14564ae9dde133a712c62fb18067eb0e423c2"
+ }
+}
