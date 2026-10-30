@@ -19,6 +19,7 @@ while the predictions are computed; they are cached in paper/cache/ (--refresh r
     fig21_surrogate_response  the closed form's response to each input, one row each: % change of the mean, exponent nu and
                               amplitude A, + that input's example P(Rg) over the reference chain's
     fig23_shape_from_sequence same <Rg>, different distributions: validation pairs with equal MD <Rg>, back to back
+    fig24_val_nu              the network's exponent nu vs. the one fitted to each protein's MD frames (validation)
 """
 import argparse
 import json
@@ -304,6 +305,17 @@ def fig1(val):
             ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(4)); ax.yaxis.set_major_locator(matplotlib.ticker.MaxNLocator(4))
             ax.text(-0.17, 1.05, letter, transform=ax.transAxes, fontsize=11, fontweight="bold", ha="right", va="bottom", color=INK)
         save(fig, "fig1_val_moments", tight=False)
+    return out
+
+
+def fig24(val):
+    with plt.rc_context({"axes.labelsize": 9, "xtick.labelsize": 8, "ytick.labelsize": 8}):
+        fig, ax = plt.subplots(figsize=(2.6, 2.6), layout="constrained")
+        out = parity_panel(ax, val["nu_fitted"], val["net"][:, 2], r"exponent $\nu$")
+        ax.set_xlabel("MD (fitted to the frames)")
+        ax.xaxis.set_major_locator(matplotlib.ticker.MaxNLocator(5)); ax.yaxis.set_major_locator(matplotlib.ticker.MaxNLocator(5))
+        ax.set_aspect("equal")
+        save(fig, "fig24_val_nu", tight=False)
     return out
 
 
@@ -717,7 +729,7 @@ def fig23(val, frames):
     return out
 
 
-FIGS = ("fig0", "fig0b", "fig1", "fig2", "fig4", "fig13", "fig15", "fig20", "fig21", "fig23")
+FIGS = ("fig0", "fig0b", "fig1", "fig2", "fig4", "fig13", "fig15", "fig20", "fig21", "fig23", "fig24")
 
 
 def main():
@@ -746,6 +758,7 @@ def main():
     if want("fig20"): m["fig20"] = fig20(val, frames)
     if want("fig21"): m["fig21"] = fig21(train)
     if want("fig23"): m["fig23"] = fig23(val, frames)
+    if want("fig24"): m["fig24"] = fig24(val)
     mpath.write_text(json.dumps(m, indent=1, default=float))
     print(f"[fig] metrics -> {mpath}")
 
