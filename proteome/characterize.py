@@ -7,8 +7,11 @@ Two kinds of chain, from proteome/results/disorder_*.csv:
     protein   whole proteins with at least --min-idr-frac of their residues inside predicted IDRs
     idr       every predicted IDR, cut out of its protein
 Both are kept between --min-n and --max-n residues; chains with residues other than the 20 standard ones (U, X) are
-dropped. Writes proteome/results/predictions.csv: one row per chain with its descriptors, both predictors' moments and
-distribution parameters, and where it sits relative to the training proteins:
+dropped. Writes proteome/results/predictions.csv (and the same table as .parquet): one row per chain with its
+descriptors (h, the closed form's thresholded contact energy, included), both predictors' moments and distribution
+parameters (net_*, cf_*; cf_A = exp(cf_lnA)), and where it sits relative to the training proteins:
+
+    whole_protein  the chain is its entire protein; an IDR spanning a whole protein also appears as a `protein` row
 
     out_of_range   descriptors outside the training min-max (`;`-separated), N beyond 490 included
     outside_1_99   descriptors outside the training 1st-99th percentiles
@@ -21,6 +24,7 @@ distribution parameters, and where it sits relative to the training proteins:
 import argparse
 import pathlib
 import sys
+import multiprocessing
 from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
@@ -45,10 +49,12 @@ def chains(min_n, max_n, min_idr_frac):
         HERE.parent / "data" / "UP000005640_9606.fasta", "fasta")}
     a = whole.assign(kind="protein", chain=whole.accession, idr=0, start=0, end=whole.length,
                      sequence=whole.accession.map(seq))
-    b = I.merge(P[["accession", "entry", "gene", "description", "reviewed"]], on="accession")
+    b = I.merge(P[["accession", "entry", "gene", "description", "reviewed", "length"]], on="accession",
+                suffixes=("", "_protein"))
     b = b.assign(kind="idr", chain=b.accession + "_idr" + b.idr.astype(str))
+    a["whole_protein"], b["whole_protein"] = True, (b.start == 0) & (b.end == b.length_protein)
     cols = ["chain", "kind", "accession", "entry", "gene", "description", "reviewed", "idr", "start", "end",
-            "mean_disorder", "sequence"]
+            "whole_protein", "mean_disorder", "sequence"]
     c = pd.concat([a[cols], b[cols]], ignore_index=True)
     n = c.sequence.str.len()
     std = c.sequence.map(lambda s: set(s) <= STANDARD)
@@ -109,14 +115,17 @@ def main(argv=None):
     C = chains(args.min_n, args.max_n, args.min_idr_frac)
     if args.sample:
         C = C.sample(args.sample, random_state=0).reset_index(drop=True)
-    with ProcessPoolExecutor(args.jobs) as pool:
+    with ProcessPoolExecutor(args.jobs, mp_context=multiprocessing.get_context("spawn")) as pool:  # JAX is threaded
         X = pd.DataFrame(list(pool.map(descriptors.descriptors, C.sequence, chunksize=16)))
     X["sequence"] = C.sequence
+    X.insert(X.columns.get_loc("mean_hydro") + 1, "h", cf.regressors(X, **cf.load()["ce_threshold"]).h)
     pred = predictions(X)
+    pred.insert(pred.columns.get_loc("cf_lnA") + 1, "cf_A", np.exp(pred.cf_lnA))
     flags = domain(X, pred)
     out = pd.concat([C.drop(columns="sequence"), X.drop(columns="sequence"), pred, flags, C[["sequence"]]], axis=1)
     out["cf_vs_net_pct"] = 100 * (out.cf_mean_rg / out.net_mean_rg - 1)
     out.to_csv(args.out, index=False, float_format="%.6g")
+    out.to_parquet(pathlib.Path(args.out).with_suffix(".parquet"), index=False)
 
     for kind, g in out.groupby("kind", sort=False):
         print(f"\n{kind}: {len(g)} chains, N {g.N.min()}-{g.N.max()} (median {g.N.median():.0f}); "

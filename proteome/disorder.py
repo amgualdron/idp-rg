@@ -24,6 +24,7 @@ HERE = pathlib.Path(__file__).resolve().parent
 FASTA = HERE.parent / "data" / "UP000005640_9606.fasta"
 OUT = HERE / "results"
 THRESHOLD = 0.5
+BATCH = 32        # small batches: batches are padded to their longest chain (titin, ~35k residues) and must fit the GPU
 
 
 def main(fasta=FASTA):
@@ -33,7 +34,8 @@ def main(fasta=FASTA):
     # sequences are cut from the original sequence, so chains containing U or X are dropped by idprg downstream.
     seqs = {r.id.split("|")[1]: str(r.seq).replace("U", "C").replace("X", "G") for r in recs}
     t0 = time.time()
-    res = meta.predict_disorder(seqs, version="V3", return_domains=True, show_progress_bar=True)
+    res = meta.predict_disorder(seqs, version="V3", return_domains=True, show_progress_bar=True,
+                               batch_size=BATCH)
     print(f"metapredict V3: {len(seqs)} proteins in {time.time() - t0:.0f} s", file=sys.stderr)
 
     prot, idrs, scores = [], [], []
