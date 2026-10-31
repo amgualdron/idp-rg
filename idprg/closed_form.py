@@ -1,14 +1,14 @@
 """The closed form: the network's two-exponent distribution with the network replaced by linear regressions on four
 descriptors and ln N, fitted by maximum likelihood to the MD frames (paper/closed_form.tex).
 
-    ln S_m = b_S + beta  . [s+, s-, <lambda>, h, ln N, s+ ln N, s- ln N, <lambda> ln N, h ln N, (ln N)^2]
-    u      = b_u + gamma . [s+, s-, <lambda>, h, ln N],          nu = 1/3 + (2/3) expit(u)
-    ln A   = a . [1, nu, 1/N, <lambda>, s+]
+    ln S_m = b_S + beta  . [s+, s-, <lambda>, h, ln N, s- ln N, <lambda> ln N, (ln N)^2]
+    u      = b_u + gamma . [s+, s+/N, s-, <lambda>, h],          nu = 1/3 + (2/3) expit(u)
+    ln A   = a . [1, nu, 1/N, <lambda>]
     h      = max(CE - c(N), 0),   c(N) = c0 + c1 ln N  (the CE threshold; CE = contact_energy)
 
 Fit (`fit`): the mean over the fit proteins of the NLL per frame on all their stored frames, plus (lam / n) times the
 squared slopes of ln S_m and u on standardized regressors (lam = 1; the ln A coefficients are not penalised).
-L-BFGS-B in float64 from a two-step start: ridge regressions of the per-protein maximum-likelihood fits
+L-BFGS-B in float64, restarted until it stops improving, from a two-step start: ridge regressions of the per-protein maximum-likelihood fits
 (data/md_fits.csv) on the regressors, and least squares for the ln A law. c0 is the fit proteins' median of
 CE - c1 ln N; c1 = 0.25 was chosen by 3-fold cross-validation on the training split (results/ce_threshold_cv.csv).
 The options of `fit` (drop a descriptor, no ln N interactions, a free linear ln A) exist for the ablations.
@@ -24,7 +24,11 @@ from . import distribution as dist
 from .data import ROOT, packed
 
 DESC = ("scd_pos", "scd_neg", "mean_hydro", "h")
-LAW = ("1", "nu", "1/N", "mean_hydro", "scd_pos")
+LAW = ("1", "nu", "1/N", "mean_hydro")
+PRODUCTS = ("scd_neg", "mean_hydro")                   # the descriptors with an x ln N product in ln S_m
+# L-BFGS-B's first trial step can send the objective to about 1e298, after which the line search reports false
+# convergence at iteration 1. Same objective, parameters rescaled so that step is 100 times smaller.
+SCALE = 0.01
 NAME = {"S": "ln_Sm", "u": "u", "A": "ln_A"}           # regression -> key in closed_form.json
 FREE = {"S": "lnSm", "u": "u", "A": "lnA"}            # regression -> per-protein fit in md_fits.csv
 
@@ -34,17 +38,18 @@ def load(path=ROOT / "model" / "closed_form.json"):
 
 
 def _columns(desc, interactions):
-    S = list(desc) + ["log_seq_length"] + ([f"{d}*log_seq_length" for d in desc] if interactions else []) + ["log_seq_length^2"]
-    return {"S": S, "u": list(desc) + ["log_seq_length"], "A": list(desc) + ["log_seq_length"]}
+    S = list(desc) + ["log_seq_length"] + ([f"{d}*log_seq_length" for d in desc if d in PRODUCTS] if interactions else []) + ["log_seq_length^2"]
+    return {"S": S, "u": list(desc) + ["scd_pos/N"] * ("scd_pos" in desc), "A": list(desc) + ["log_seq_length"]}
 
 
 def regressors(table, c0, c1):
-    """The table with h, the descriptor x ln N products and (ln N)^2 added."""
+    """The table with h, s+/N, the descriptor x ln N products and (ln N)^2 added."""
     d = table.copy()
     d["h"] = np.maximum(d.contact_energy - c1 * d.log_seq_length - c0, 0.0)
     for x in DESC:
         d[f"{x}*log_seq_length"] = d[x] * d.log_seq_length
     d["log_seq_length^2"] = d.log_seq_length ** 2
+    d["scd_pos/N"] = d.scd_pos / d.N
     return d
 
 
@@ -152,9 +157,24 @@ def fit(proteins, md_fits, fit, F, c1=0.25, drop=(), interactions=True, law=True
 
     vg = jax.jit(jax.value_and_grad(objective))
     f = lambda th: tuple(np.asarray(v, float) for v in vg(jnp.asarray(th), *args))
-    r = minimize(f, th0, jac=True, method="L-BFGS-B", options=dict(maxiter=3000, maxfun=6000, ftol=1e-12, gtol=1e-7))
-    coef = dict(ce_threshold=dict(c0=c0, c1=c1), **form.to_raw(r.x))
-    n_par = len(r.x) + ("h" in desc) * (1 + (c1 != 0))
-    info = dict(n_fit=len(a), n_coefficients=len(r.x), n_parameters=int(n_par), objective_start=float(f(th0)[0]),
-                objective_end=float(r.fun), iterations=int(r.nit), message=str(r.message))
+    th, nit, last = th0.copy(), 0, np.inf
+    for _ in range(6):
+        origin = th.copy()
+
+        def scaled(z):
+            v, g = f(origin + SCALE * z)
+            return v, SCALE * g
+
+        r = minimize(scaled, np.zeros_like(th), jac=True, method="L-BFGS-B",
+                     options=dict(maxiter=3000, maxfun=6000, ftol=1e-12, gtol=1e-7 * SCALE))
+        th, nit, stop = origin + SCALE * r.x, nit + r.nit, last - r.fun < 1e-8
+        last = r.fun
+        if stop:
+            break
+    if nit <= 20:
+        raise RuntimeError(f"optimizer stopped after {nit} iterations: {r.message}")
+    coef = dict(ce_threshold=dict(c0=c0, c1=c1), **form.to_raw(th))
+    n_par = len(th) + ("h" in desc) * (1 + (c1 != 0))
+    info = dict(n_fit=len(a), n_coefficients=len(th), n_parameters=int(n_par), objective_start=float(f(th0)[0]),
+                objective_end=float(last), iterations=int(nit), message=str(r.message))
     return coef, info

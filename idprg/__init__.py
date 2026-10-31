@@ -5,7 +5,7 @@ sampled by HPS1 coarse-grained simulations at 298 K and 150 mM salt.
     idprg.predict(["MDVFMKGLSKAKEGVVAAAEKTKQGVAEAAGKTKEGVLYVGSKTKEGVVHGVATVAEKTKEQVTNVGGAVVTGVTAVAQKTVEGAGSIAAATGFVKKDQLGKNEEGAPQEGILEDMPVDPDNEAYEMPSEEGYQDYEPEA"])
 
 returns <Rg>, sigma, skewness, excess kurtosis and the parameters (ln A, S_m, nu) of the predicted two-exponent distribution; the
-density itself is idprg.distribution.pdf(rg, lnA, ln S_m, nu). closed_form=True uses the 24-parameter closed form
+density itself is idprg.distribution.pdf(rg, lnA, ln S_m, nu). closed_form=True uses the 21-parameter closed form
 instead of the network.
 """
 from . import distribution  # noqa: F401  (first: enables float64 in JAX)

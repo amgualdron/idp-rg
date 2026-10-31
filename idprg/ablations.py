@@ -11,6 +11,7 @@ closed form, validation only:
     constant CE threshold (c1 = 0), free ln A (linear in the descriptors instead of the law)
 """
 import json
+import multiprocessing
 import os
 import pathlib
 import time
@@ -79,7 +80,8 @@ def run(args):
     todo = [t for t in tasks() if (args.only is None or t["model"] == args.only.replace("-", "_"))
             and (t["model"], t["ablation"], str(t["seed"]), SET_NAME[t["split"]]) not in have]
     print(f"{len(todo)} runs to do, {len(have)} done", flush=True)
-    with ProcessPoolExecutor(args.jobs) as pool:
+    # spawn, not fork: the parent has already started JAX, and a forked worker deadlocks on its locks
+    with ProcessPoolExecutor(args.jobs, mp_context=multiprocessing.get_context("spawn")) as pool:
         for f in as_completed([pool.submit(_run, t) for t in todo]):
             row = f.result()
             done = pd.read_csv(out) if out.exists() else pd.DataFrame()     # re-read: another runner may have added rows

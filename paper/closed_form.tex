@@ -11,7 +11,7 @@
 \newcommand{\expit}{\operatorname{expit}}
 
 \title{A closed-form model for the radius-of-gyration distribution\\ of intrinsically disordered proteins (HPS1)}
-\date{27 October 2026}
+\date{31 October 2026}
 \author{}
 
 \begin{document}
@@ -27,7 +27,7 @@ threshold). It was fitted by maximum likelihood to the stored MD frames of \val{
 \val{cf.val.n} held-out validation proteins it predicts $\langle\Rg\rangle$ with a mean absolute error of
 \val{cf.val.mean_err_pct}\% and the standard deviation with \val{cf.val.std_err_pct}\%. The median Wasserstein-1
 distance of the full distribution is \val{cf.val.w1_pct_median}\% of $\langle\Rg\rangle$. On the \val{cf.test.n} test
-proteins, scored once, the three errors are \val{cf.test.mean_err_pct}\%, \val{cf.test.std_err_pct}\% and
+proteins, scored once for this form, the three errors are \val{cf.test.mean_err_pct}\%, \val{cf.test.std_err_pct}\% and
 \val{cf.test.w1_pct_median}\%.
 \end{abstract}
 
@@ -62,19 +62,18 @@ grid.
 \section{The parameters as functions of the sequence}
 With $L=\ln N$:
 \begin{align}
-\ln S_m &= b_0+b_L L+b_{LL}L^2+\sum_{x\in\{s_+,\,s_-,\,\lam,\,h\}}\big(\beta_x+\beta_{xL}\,L\big)\,x, \label{eq:Sm}\\
-u &= \gamma_0+\gamma_L L+\gamma_+ s_+ +\gamma_- s_- +\gamma_\lambda\lam+\gamma_h h,\qquad \nu=\frac13+\frac23\,\expit(u),\label{eq:nu}\\
-\ln A &= a_0+a_\nu\,\nu+\frac{a_N}{N}+a_\lambda\lam+a_+ s_+ .\label{eq:A}
+\ln S_m &= b_0+b_L L+b_{LL}L^2+\beta_+s_++\beta_hh+\sum_{x\in\{s_-,\,\lam\}}\big(\beta_x+\beta_{xL}\,L\big)\,x, \label{eq:Sm}\\
+u &= \gamma_0+\gamma_+ s_+ +\gamma_{+N}\frac{s_+}{N}+\gamma_- s_- +\gamma_\lambda\lam+\gamma_h h,\qquad \nu=\frac13+\frac23\,\expit(u),\label{eq:nu}\\
+\ln A &= a_0+a_\nu\,\nu+\frac{a_N}{N}+a_\lambda\lam .\label{eq:A}
 \end{align}
 $\expit(u)=1/(1+e^{-u})$ keeps $\nu$ inside $(1/3,1)$. The amplitude depends on the sequence through $\nu$, through
-$1/N$ (the finite-length correction) and through $\lam$ and $s_+$; it has no regression of its own. The coefficients
-are in Table~\ref{tab:coef}. With them inserted:
+$1/N$ (the finite-length correction) and through $\lam$; it has no regression of its own. The term $s_+/N$ lets like-charge
+repulsion raise $\nu$ more in short chains than in long ones. The coefficients are in Table~\ref{tab:coef}. With them inserted:
 \begin{align*}
-\ln S_m ={}& -1.71703+0.678256\,L-0.00821993\,L^2\\
- &+(0.110188+0.0154080\,L)\,s_+ +(-0.627175+0.240610\,L)\,s_-\\
- &+(-0.0629228-0.0672122\,L)\,\lam+(-0.0831936-0.000565318\,L)\,h,\\[2pt]
-u ={}& 0.0619201-0.0634653\,L+0.247694\,s_+ +1.95412\,s_- -0.149868\,\lam-0.227442\,h,\\[2pt]
-\ln A ={}& -0.130334+2.40160\,\nu+\frac{12.2395}{N}-0.322902\,\lam+0.0130305\,s_+ ,
+\ln S_m ={}& -1.73956+0.672772\,L-0.0063239\,L^2+0.192433\,s_+\\
+ &+(-0.663359+0.243714\,L)\,s_- +(-0.00201655-0.0792066\,L)\,\lam-0.0871931\,h,\\[2pt]
+u ={}& -0.284599+0.128824\,s_+ +\frac{23.5874\,s_+}{N}+1.70886\,s_--0.134595\,\lam-0.234043\,h,\\[2pt]
+\ln A ={}& -0.09739+2.36289\,\nu+\frac{11.5194}{N}-0.323979\,\lam ,
 \end{align*}
 with $S_m$ in nm, and $h=\max(\mathrm{CE}+1.4318127-0.25\,L,\,0)$.
 
@@ -83,39 +82,36 @@ with $S_m$ in nm, and $h=\max(\mathrm{CE}+1.4318127-0.25\,L,\,0)$.
 \caption{Coefficients (six significant figures; full precision in \texttt{model/closed\_form.json}). $S_m$ in nm.}\label{tab:coef}
 \begin{tabular}{@{}l r@{}}
 \toprule
-\multicolumn{2}{@{}l}{$\ln S_m$, Eq.~\eqref{eq:Sm} (11)}\\
+\multicolumn{2}{@{}l}{$\ln S_m$, Eq.~\eqref{eq:Sm} (9)}\\
 \midrule
-$1$ & $-1.71703$ \\
-$s_+$ & $0.110188$ \\
-$s_-$ & $-0.627175$ \\
-$\lam$ & $-0.0629228$ \\
-$h$ & $-0.0831936$ \\
-$\ln N$ & $0.678256$ \\
-$s_+\ln N$ & $0.0154080$ \\
-$s_-\ln N$ & $0.240610$ \\
-$\lam\ln N$ & $-0.0672122$ \\
-$h\ln N$ & $-0.000565318$ \\
-$(\ln N)^2$ & $-0.00821993$ \\
+$1$ & $-1.73956$ \\
+$s_+$ & $0.192433$ \\
+$s_-$ & $-0.663359$ \\
+$\lam$ & $-0.00201655$ \\
+$h$ & $-0.0871931$ \\
+$\ln N$ & $0.672772$ \\
+$s_-\ln N$ & $0.243714$ \\
+$\lam\ln N$ & $-0.0792066$ \\
+$(\ln N)^2$ & $-0.0063239$ \\
 \bottomrule
 \end{tabular}\hspace{1.5cm}
 \begin{tabular}{@{}l r@{}}
 \toprule
 \multicolumn{2}{@{}l}{$u$, Eq.~\eqref{eq:nu} (6)}\\
 \midrule
-$1$ & $0.0619201$ \\
-$s_+$ & $0.247694$ \\
-$s_-$ & $1.95412$ \\
-$\lam$ & $-0.149868$ \\
-$h$ & $-0.227442$ \\
-$\ln N$ & $-0.0634653$ \\
+$1$ & $-0.284599$ \\
+$s_+$ & $0.128824$ \\
+$s_+/N$ & $23.5874$ \\
+$s_-$ & $1.70886$ \\
+$\lam$ & $-0.134595$ \\
+$h$ & $-0.234043$ \\
 \midrule
-\multicolumn{2}{@{}l}{$\ln A$, Eq.~\eqref{eq:A} (5)}\\
+\multicolumn{2}{@{}l}{$\ln A$, Eq.~\eqref{eq:A} (4)}\\
 \midrule
-$1$ & $-0.130334$ \\
-$\nu$ & $2.40160$ \\
-$1/N$ & $12.2395$ \\
-$\lam$ & $-0.322902$ \\
-$s_+$ & $0.0130305$ \\
+$1$ & $-0.09739$ \\
+$\nu$ & $2.36289$ \\
+$1/N$ & $11.5194$ \\
+$\lam$ & $-0.323979$ \\
 \midrule
 \multicolumn{2}{@{}l}{CE threshold $c(N)=c_0+c_1\ln N$ (2)}\\
 \midrule
@@ -125,11 +121,20 @@ $c_1$ & $0.25$ \\
 \end{tabular}
 \end{table}
 
-\paragraph{Parameter count.} $11+6+5=22$ coefficients plus the two constants of the CE threshold
+\paragraph{Parameter count.} $9+6+4=19$ coefficients plus the two constants of the CE threshold
 $c(N)=c_0+c_1\ln N$, both set from the training data: $c_1=0.25$ was chosen from $\{-0.5,0,0.25,0.5,0.75,1\}$ by
 three-fold cross-validation on the training proteins (Section~\ref{sec:threshold}), and $c_0$ is the median of
-$\mathrm{CE}-c_1\ln N$ over the 3{,}223 training proteins: 24 parameters. The constants inside the descriptors
+$\mathrm{CE}-c_1\ln N$ over the 3{,}223 training proteins: 21 parameters. The constants inside the descriptors
 (Section~\ref{sec:desc}) were fixed before this fit and are not counted.
+
+\paragraph{How this form was reached.} An earlier 24-parameter form had $\ln N$ in $u$, no $s_+/N$, the products
+$s_+\ln N$ and $h\ln N$ in $\ln S_m$, and $s_+$ in $\ln A$; it capped $\nu$ for short, like-charged chains. The term
+$s_+/N$ was added and those four terms removed one at a time, each change judged by the out-of-fold NLL (a removal may not
+raise it by more than two standard errors, paired per protein with one sequence cluster as one unit; an addition must lower
+it by more than two) and by the NLL on the length and contact-energy sets (not higher than the earlier form by more
+than $10^{-3}$). The next removal, of $\gamma_+$, failed. Other shapes for the term ($s_+N^{-\Delta}$, saturation in $s_+$
+or in $N$) and terms in $h/N$ did not pass. The choice was made after seeing training residuals of the earlier form and its
+test score, so the gain over it is not a blind estimate.
 
 %==========================================================================================================
 \section{Descriptors}\label{sec:desc}
@@ -222,7 +227,8 @@ $\kappa=1.2738$~nm$^{-1}$), with 30{,}000 stored frames per protein. The protein
 \item \val{data.n_train} training proteins, used for the fit;
 \item \val{data.n_val} validation proteins, used only for the scores below (one validation protein with corrupt stored
   frames is excluded);
-\item \val{data.n_test} test proteins, scored once at the end.
+\item \val{data.n_test} test proteins, scored once for this form, after its coefficients were fixed
+  (earlier forms were scored on them too; \texttt{data/README.md}, test-split log).
 \end{itemize}
 
 \paragraph{Objective.} The mean over training proteins of the per-frame negative log-likelihood of all stored frames,
@@ -402,7 +408,7 @@ without $s_+$ & \val{abl.cf.val.no_scd_pos.n_parameters} & \val{abl.cf.val.no_sc
 without $s_-$ & \val{abl.cf.val.no_scd_neg.n_parameters} & \val{abl.cf.val.no_scd_neg.nll} & \val{abl.cf.val.no_scd_neg.mean_err_pct} & \val{abl.cf.val.no_scd_neg.std_err_pct} & \val{abl.cf.val.no_scd_neg.w1_pct_median}\\
 without $\lam$ & \val{abl.cf.val.no_mean_hydro.n_parameters} & \val{abl.cf.val.no_mean_hydro.nll} & \val{abl.cf.val.no_mean_hydro.mean_err_pct} & \val{abl.cf.val.no_mean_hydro.std_err_pct} & \val{abl.cf.val.no_mean_hydro.w1_pct_median}\\
 without $h$ & \val{abl.cf.val.no_h.n_parameters} & \val{abl.cf.val.no_h.nll} & \val{abl.cf.val.no_h.mean_err_pct} & \val{abl.cf.val.no_h.std_err_pct} & \val{abl.cf.val.no_h.w1_pct_median}\\
-no $x\ln N$ terms in $\ln S_m$ & \val{abl.cf.val.no_ln_N_interactions.n_parameters} & \val{abl.cf.val.no_ln_N_interactions.nll} & \val{abl.cf.val.no_ln_N_interactions.mean_err_pct} & \val{abl.cf.val.no_ln_N_interactions.std_err_pct} & \val{abl.cf.val.no_ln_N_interactions.w1_pct_median}\\
+no $s_-\ln N$, $\lam\ln N$ in $\ln S_m$ & \val{abl.cf.val.no_ln_N_interactions.n_parameters} & \val{abl.cf.val.no_ln_N_interactions.nll} & \val{abl.cf.val.no_ln_N_interactions.mean_err_pct} & \val{abl.cf.val.no_ln_N_interactions.std_err_pct} & \val{abl.cf.val.no_ln_N_interactions.w1_pct_median}\\
 constant CE threshold ($c_1=0$) & \val{abl.cf.val.constant_CE_threshold.n_parameters} & \val{abl.cf.val.constant_CE_threshold.nll} & \val{abl.cf.val.constant_CE_threshold.mean_err_pct} & \val{abl.cf.val.constant_CE_threshold.std_err_pct} & \val{abl.cf.val.constant_CE_threshold.w1_pct_median}\\
 $\ln A$ linear in the descriptors & \val{abl.cf.val.free_ln_A.n_parameters} & \val{abl.cf.val.free_ln_A.nll} & \val{abl.cf.val.free_ln_A.mean_err_pct} & \val{abl.cf.val.free_ln_A.std_err_pct} & \val{abl.cf.val.free_ln_A.w1_pct_median}\\
 \bottomrule

@@ -1,0 +1,47 @@
+{
+ "ce_threshold": {
+  "c0": -1.4318126605580268,
+  "c1": 0.25
+ },
+ "ln_Sm": {
+  "intercept": -1.7170335667395407,
+  "coef": {
+   "scd_pos": 0.11018825614711526,
+   "scd_neg": -0.6271746639035501,
+   "mean_hydro": -0.06292281916820966,
+   "h": -0.08319356307280194,
+   "log_seq_length": 0.6782563244722208,
+   "scd_pos*log_seq_length": 0.015408012759512727,
+   "scd_neg*log_seq_length": 0.24060969822997497,
+   "mean_hydro*log_seq_length": -0.06721220153858859,
+   "h*log_seq_length": -0.0005653180045082347,
+   "log_seq_length^2": -0.008219925282390472
+  }
+ },
+ "u": {
+  "intercept": 0.061920144180042935,
+  "coef": {
+   "scd_pos": 0.24769367387515911,
+   "scd_neg": 1.954124653483826,
+   "mean_hydro": -0.14986825462359088,
+   "h": -0.2274415349688052,
+   "log_seq_length": -0.06346527584609077
+  }
+ },
+ "ln_A": {
+  "1": -0.13033396212778992,
+  "nu": 2.401598475245532,
+  "1/N": 12.239513192872762,
+  "mean_hydro": -0.3229022464430404,
+  "scd_pos": 0.013030504899448885
+ },
+ "n_coefficients": 22,
+ "n_parameters": 24,
+ "fit": {
+  "proteins": "training split (3,223 proteins), all 30,000 stored frames each",
+  "objective": "mean NLL per frame + (1/n) |slopes of ln_Sm and u on standardized regressors|^2",
+  "optimizer": "L-BFGS-B, float64",
+  "objective_end": 1.1519644268806075,
+  "command": "idprg fit-closed-form --split standard"
+ }
+}

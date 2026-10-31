@@ -46,9 +46,8 @@ shares a cluster with a training protein.
 - **What each split was used for.** All fitting used the training split only. Model choices were made by
   cross-validation inside the training split and on the length and sticky extrapolation splits (`idprg.data.split`).
   The validation split was used to compare final candidates.
-- **The test split** was scored once for the released model, after everything in this repository was fixed (see the
-  log below). During development it had been scored three times for earlier versions of the model, so it is not
-  entirely unseen. It was never used to fit or select the released model.
+- **The test split** was scored once for each released model, after that model was fixed (see the log below). It had
+  also been scored for earlier versions, so it is not entirely unseen. It was never used to fit the released models.
 
 ## Tables
 
@@ -123,7 +122,7 @@ Commands that need the frame store take `--frames PATH`, or read the `IDPRG_FRAM
 
 ## Test-split log
 
-The test split was opened four times in total. Only the last opening concerns the model in this repository; the
+The test split was opened five times in total. The last two openings concern the models in this repository; the
 earlier ones scored development versions.
 
 | date | model scored |
@@ -131,8 +130,10 @@ earlier ones scored development versions.
 | 2026-10-21 | an earlier network |
 | 2026-10-24 | an earlier 8-input network and its 30-parameter closed form |
 | 2026-10-25 | an earlier 24-parameter two-exponent closed form |
-| 2026-10-27 | **the released model**: `model/network.eqx` (SHA-256 `bd757251…`) and `model/closed_form.json` (`f1ea4ca1…`), scored once with `idprg evaluate --set test` |
+| 2026-10-27 | **the released network**: `model/network.eqx` (SHA-256 `bd757251…`), and the 24-parameter closed form (`f1ea4ca1…`), scored once with `idprg evaluate --set test` |
+| 2026-10-31 | **the released closed form**: the 21-parameter `model/closed_form.json` (`3f7f7061…`), frozen beforehand and scored once with `idprg evaluate --model closed-form --set test`; the network was not rescored |
 
-The scores of the last opening are in `results/metrics.json` under `test` and, per protein, in
-`results/network_test.csv` and `results/closed_form_test.csv`. Nothing was fitted or selected after it, and the test
-split is not to be scored again.
+The released models' scores are in `results/metrics.json` under `test` and, per protein, in
+`results/network_test.csv` and `results/closed_form_test.csv`. The 21-parameter form was chosen on cross-validation and the
+extrapolation sets after the 24-parameter form's test score was known, so it is not entirely blind. Nothing was fitted or
+selected after the last opening, and the test split is not to be scored again.

@@ -242,7 +242,7 @@ def collect():
     for r in ("ln_Sm", "u"):
         N[f"cf.coef.{r}.1"] = cf[r]["intercept"]
         for k, v in cf[r]["coef"].items():
-            N[f"cf.coef.{r}.{k.replace('*', '.').replace('^2', '2')}"] = v
+            N[f"cf.coef.{r}.{k.replace('*', '.').replace('^2', '2').replace('/', '_over_')}"] = v
     for k, v in cf["ln_A"].items():
         N[f"cf.coef.ln_A.{k.replace('/', '_over_')}"] = v
     N["cf.n_parameters"], N["cf.n_coefficients"] = cf["n_parameters"], cf["n_coefficients"]

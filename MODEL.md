@@ -8,7 +8,7 @@ The input is the amino-acid sequence alone: the 20 standard residues, N ≥ 20.
 The predictions reproduce HPS1 coarse-grained molecular dynamics (Dignon et al. 2018) at 298 K and 150 mM salt. They do
 not reproduce experiment, other force fields, or other temperatures and salt concentrations.
 
-There are two predictors with the same output: a network and a 24-parameter closed form.
+There are two predictors with the same output: a network and a 21-parameter closed form.
 
 ## The output distribution
 
@@ -64,12 +64,12 @@ charges (histidine +0.5) and hydropathies.
 ## Closed form
 
 The closed form uses the same distribution, with the network replaced by:
-- ln S_m (11 coefficients) and u (6) linear in s₊, s₋, ⟨λ⟩, h and ln N, with ln S_m also carrying the descriptor × ln N
-  products and (ln N)²;
-- ln A from the law [1, ν, 1/N, ⟨λ⟩, s₊] (5).
+- ln S_m (9 coefficients) linear in s₊, s₋, ⟨λ⟩, h and ln N, plus s₋ ln N, ⟨λ⟩ ln N and (ln N)²;
+- u (6) linear in s₊, s₊/N, s₋, ⟨λ⟩ and h;
+- ln A from the law [1, ν, 1/N, ⟨λ⟩] (4).
 
 h = max(CE − c(N), 0) is the excess of the contact energy over the CE threshold c(N) = c₀ + 0.25 ln N. In total the
-closed form has 22 coefficients and 2 threshold constants, 24 parameters.
+closed form has 19 coefficients and 2 threshold constants, 21 parameters.
 
 It was fitted by maximum likelihood on all 30,000 stored frames of each training protein, with a weak ridge penalty on
 the slopes (`idprg fit-closed-form`, about 10 minutes on a CPU). `paper/closed_form.tex` gives the formula with every
@@ -105,7 +105,7 @@ by hand.
 |  | NLL | ⟨R_g⟩ err | bias | σ err | skew err | W₁ median [p90] | compact ⟨R_g⟩ err |
 |---|---|---|---|---|---|---|---|
 | network | 1.1525 | 1.84% | +0.35% | 4.73% | 0.093 | 1.47% [4.24] | 4.90% |
-| closed form | 1.1622 | 2.56% | +0.65% | 5.90% | 0.099 | 1.83% [5.65] | 12.7% |
+| closed form | 1.1620 | 2.53% | +0.64% | 5.81% | 0.098 | 1.79% [5.59] | 12.6% |
 <!-- /numbers -->
 
 By chain length (⟨R_g⟩ error / σ error; number of proteins in brackets):
@@ -114,7 +114,7 @@ By chain length (⟨R_g⟩ error / σ error; number of proteins in brackets):
 | N | ≤ 50 (51) | 51–100 (105) | 101–200 (223) | 201–300 (192) | > 300 (124) |
 |---|---|---|---|---|---|
 | network | 1.51% / 4.5% | 1.43% / 3.8% | 1.90% / 5.0% | 1.94% / 5.3% | 2.04% / 4.2% |
-| closed form | 1.65% / 5.9% | 1.63% / 3.8% | 2.31% / 5.5% | 3.57% / 8.1% | 2.62% / 5.0% |
+| closed form | 1.62% / 4.8% | 1.63% / 3.7% | 2.27% / 5.5% | 3.53% / 8.0% | 2.58% / 5.2% |
 <!-- /numbers -->
 
 By contact energy, relative to the training quantiles (⟨R_g⟩ error / σ error):
@@ -123,19 +123,20 @@ By contact energy, relative to the training quantiles (⟨R_g⟩ error / σ erro
 | CE | ≤ q75 = 0.333 (509) | q75–q90 (91) | ≥ q90 = 1.035 (95) |
 |---|---|---|---|
 | network | 1.40% / 3.5% | 2.20% / 4.0% | 3.82% / 11.7% |
-| closed form | 1.82% / 3.8% | 2.57% / 4.8% | 6.52% / 18.5% |
+| closed form | 1.79% / 3.7% | 2.56% / 4.8% | 6.47% / 18.0% |
 <!-- /numbers -->
 
 ### Test (691 proteins)
 
-The test split was scored once for this model, on 2026-10-27, after the network, the closed form and everything in
-this repository were fixed (`data/README.md`, test-split log). Nothing was changed afterwards.
+The test split was scored once for the network, on 2026-10-27, and once for the closed form, on 2026-10-31, each after
+that model was fixed (`data/README.md`, test-split log). The closed form was revised after the 2026-10-27 opening of its
+earlier 24-parameter version, so its scores are not a blind estimate.
 
 <!-- numbers:test -->
 |  | NLL | ⟨R_g⟩ err | bias | σ err | skew err | W₁ median [p90] | compact ⟨R_g⟩ err |
 |---|---|---|---|---|---|---|---|
 | network | 1.1379 | 2.02% | −0.18% | 4.69% | 0.104 | 1.53% [4.34] | 7.02% |
-| closed form | 1.1464 | 2.55% | −0.18% | 5.10% | 0.109 | 1.86% [5.19] | 12.7% |
+| closed form | 1.1462 | 2.53% | −0.18% | 5.09% | 0.112 | 1.82% [5.12] | 12.6% |
 <!-- /numbers -->
 
 By chain length and by contact energy (⟨R_g⟩ error / σ error):
@@ -144,14 +145,14 @@ By chain length and by contact energy (⟨R_g⟩ error / σ error):
 | N | ≤ 50 (69) | 51–100 (102) | 101–200 (209) | 201–300 (152) | > 300 (159) |
 |---|---|---|---|---|---|
 | network | 1.90% / 4.3% | 1.36% / 4.5% | 1.93% / 4.9% | 2.41% / 4.6% | 2.23% / 4.8% |
-| closed form | 1.85% / 4.4% | 1.64% / 4.2% | 2.28% / 5.4% | 3.00% / 5.4% | 3.36% / 5.3% |
+| closed form | 1.84% / 3.7% | 1.61% / 4.3% | 2.27% / 5.3% | 2.99% / 5.4% | 3.30% / 5.5% |
 <!-- /numbers -->
 
 <!-- numbers:test-ce -->
 | CE | ≤ q75 = 0.333 (485) | q75–q90 (127) | ≥ q90 = 1.035 (79) |
 |---|---|---|---|
 | network | 1.41% / 3.6% | 2.41% / 4.1% | 5.14% / 12.5% |
-| closed form | 1.73% / 3.5% | 3.02% / 3.6% | 6.81% / 17.1% |
+| closed form | 1.71% / 3.5% | 3.00% / 3.7% | 6.76% / 17.0% |
 <!-- /numbers -->
 
 The test scores are close to the validation scores, and the weak regimes are the same: sticky chains (CE ≥ q90) and
@@ -169,10 +170,10 @@ part. Sequence-cluster mates of the scored proteins were removed from the fit se
 |---|---|---|---|---|---|---|---|
 | **length** (602 scored, 35 compact) |  |  |  |  |  |  |  |
 | network | 1.6510 | 2.38% | −0.07% | 4.85% | 0.075 | 1.69% [5.02] | 6.74% |
-| closed form | 1.6684 | 3.57% | −0.76% | 4.88% | 0.125 | 2.82% [6.96] | 9.42% |
+| closed form | 1.6628 | 3.26% | −0.98% | 5.56% | 0.100 | 2.48% [6.48] | 10.0% |
 | **sticky** (323 scored, 82 compact) |  |  |  |  |  |  |  |
 | network | 1.3195 | 5.56% | +1.86% | 15.6% | 0.171 | 3.94% [13.2] | 10.9% |
-| closed form | 1.3403 | 5.90% | +2.51% | 16.8% | 0.241 | 4.51% [12.7] | 11.3% |
+| closed form | 1.3305 | 5.83% | +2.42% | 19.3% | 0.246 | 4.64% [12.6] | 11.0% |
 <!-- /numbers -->
 
 The network models trained this way are rows `reference`, seed 42, of `results/ablations.csv`; the scores are in
@@ -186,7 +187,7 @@ The benchmark proteins have a SAXS R_g and an HPS1 trajectory. They were not use
 | ⟨R_g⟩ | against HPS1: error / bias | against SAXS: error / bias / MAE |
 |---|---|---|
 | network | 1.73% / +0.61% | 13.6% / +7.60% / 0.416 nm |
-| closed form | 2.00% / +0.96% | 13.7% / +7.96% / 0.419 nm |
+| closed form | 1.98% / +0.93% | 13.7% / +7.92% / 0.419 nm |
 | HPS1 simulation itself | — | 12.5% / +6.81% / 0.386 nm |
 <!-- /numbers -->
 
@@ -222,14 +223,14 @@ seeds 42–46. Rows marked *pending* have not been run yet: `idprg ablations` re
 <!-- numbers:ablations-closed-form -->
 | closed form | parameters | val NLL | val ⟨R_g⟩ err | val σ err | val W₁ median |
 |---|---|---|---|---|---|
-| reference | 24 | 1.1622 | 2.56% | 5.90% | 1.83% |
-| `-scd_pos` | 20 | 1.2306 | 6.09% | 12.6% | 4.61% |
-| `-scd_neg` | 21 | 1.1647 | 2.69% | 6.48% | 1.87% |
-| `-mean_hydro` | pending | pending | pending | pending | pending |
-| `-h` | pending | pending | pending | pending | pending |
-| no ln N interactions | pending | pending | pending | pending | pending |
-| constant CE threshold | pending | pending | pending | pending | pending |
-| free ln A | pending | pending | pending | pending | pending |
+| reference | 21 | 1.1620 | 2.53% | 5.81% | 1.79% |
+| `-scd_pos` | 18 | 1.2320 | 6.18% | 12.6% | 4.65% |
+| `-scd_neg` | 18 | 1.1644 | 2.67% | 6.33% | 1.86% |
+| `-mean_hydro` | 17 | 1.1673 | 3.10% | 6.08% | 2.27% |
+| `-h` | 17 | 1.1949 | 3.97% | 7.03% | 2.27% |
+| no ln N interactions | 19 | 1.1632 | 2.61% | 5.99% | 1.83% |
+| constant CE threshold | 20 | 1.1623 | 2.56% | 5.82% | 1.80% |
+| free ln A | 23 | 1.1619 | 2.55% | 6.22% | 1.82% |
 <!-- /numbers -->
 
 ## Domain of validity

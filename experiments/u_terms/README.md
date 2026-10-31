@@ -38,6 +38,24 @@ unchanged.
 | `hN` | + s+/N + h/N | 26 |
 | `dSH` | both Deltas fitted, plain h replaced | 27 |
 
+Saturation tests, added after the fits above: s+/N overshoots at high s+ on short chains. All on the 23-parameter form
+(s+/N with s+ ln N and h ln N removed), jobs `MODEL:standard:FOLD:scd_pos,h`. Both limits nest s+/N.
+
+| Model | Term in u | Parameters |
+|---|---|---:|
+| `satN` | s+ / (1 + N/N0) | 24 |
+| `satS` | s0 tanh(s+/s0) / N | 24 |
+| `satSN` | s0 tanh(s+/s0) / (1 + N/N0) | 25 |
+
+## Outcome (2026-10-31)
+
+Adopted model `a1`, 21 parameters: s+/N added; s+ ln N and h ln N removed from ln S_m; ln N removed from u; s+ removed from
+ln A. Removing s+ from ln A is what fixed the contact-energy set (+0.024 to -0.0098; protein 761 no longer stands out).
+The next removal, u's s+ (`a2`), failed at +2.1 SE. Saturation in s+ was not wanted (s0 ran to hundreds or more); saturation in N
+did not pass. c1 = 0.25 was reselected on the new form. `fit.py` keeps the published form as its base, so its results stay
+reproducible; `reference/published/` holds that form and its scores. The validation split was scored for the 23-parameter
+form before `a1` was chosen, so validation is not a clean check of `a1` either.
+
 ## Running
 
 ```bash

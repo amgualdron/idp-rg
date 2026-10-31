@@ -167,9 +167,9 @@ repeated for every batch. There are no other terms.
 Implementation: \texttt{idprg/closed\_form.py}. Coefficients: \texttt{model/closed\_form.json}. Derivation and fit:
 \texttt{closed\_form.tex}. It keeps the distribution \eqref{eq:p} and replaces the network by
 \begin{align}
-\ln S_m &= b_0+b_L L+b_{LL}L^2+\sum_{x\in\{s_+,s_-,\lam,h\}}(\beta_x+\beta_{xL}L)\,x,\\
-u &= \gamma_0+\gamma_L L+\gamma_+s_++\gamma_-s_-+\gamma_\lambda\lam+\gamma_h h,\\
-\ln A &= a_0+a_\nu\nu+a_N/N+a_\lambda\lam+a_+s_+,\\
+\ln S_m &= b_0+b_L L+b_{LL}L^2+\beta_+s_++\beta_hh+\sum_{x\in\{s_-,\lam\}}(\beta_x+\beta_{xL}L)\,x,\\
+u &= \gamma_0+\gamma_+s_++\gamma_{+N}s_+/N+\gamma_-s_-+\gamma_\lambda\lam+\gamma_h h,\\
+\ln A &= a_0+a_\nu\nu+a_N/N+a_\lambda\lam,\\
 h &= \max\big(\mathrm{CE}-c(N),0\big),\qquad c(N)=\val{cf.c0}+\val{cf.c1}\,L .
 \end{align}
 It has \val{cf.n_coefficients} coefficients plus the two constants of $c(N)$, \val{cf.n_parameters} parameters in all:
@@ -181,16 +181,14 @@ It has \val{cf.n_coefficients} coefficients plus the two constants of $c(N)$, \v
 \multicolumn{2}{@{}l}{$\ln S_m$} & \multicolumn{2}{l}{$u$} & \multicolumn{2}{l@{}}{$\ln A$}\\
 \midrule
 $b_0$ & \val{cf.coef.ln_Sm.1} & $\gamma_0$ & \val{cf.coef.u.1} & $a_0$ & \val{cf.coef.ln_A.1}\\
-$b_L$ & \val{cf.coef.ln_Sm.log_seq_length} & $\gamma_L$ & \val{cf.coef.u.log_seq_length} & $a_\nu$ & \val{cf.coef.ln_A.nu}\\
+$b_L$ & \val{cf.coef.ln_Sm.log_seq_length} & $\gamma_{+N}$ & \val{cf.coef.u.scd_pos_over_N} & $a_\nu$ & \val{cf.coef.ln_A.nu}\\
 $b_{LL}$ & \val{cf.coef.ln_Sm.log_seq_length2} & $\gamma_+$ & \val{cf.coef.u.scd_pos} & $a_N$ & \val{cf.coef.ln_A.1_over_N}\\
 $\beta_{+}$ & \val{cf.coef.ln_Sm.scd_pos} & $\gamma_-$ & \val{cf.coef.u.scd_neg} & $a_\lambda$ & \val{cf.coef.ln_A.mean_hydro}\\
-$\beta_{-}$ & \val{cf.coef.ln_Sm.scd_neg} & $\gamma_\lambda$ & \val{cf.coef.u.mean_hydro} & $a_+$ & \val{cf.coef.ln_A.scd_pos}\\
+$\beta_{-}$ & \val{cf.coef.ln_Sm.scd_neg} & $\gamma_\lambda$ & \val{cf.coef.u.mean_hydro} & & \\
 $\beta_{\lambda}$ & \val{cf.coef.ln_Sm.mean_hydro} & $\gamma_h$ & \val{cf.coef.u.h} & & \\
 $\beta_{h}$ & \val{cf.coef.ln_Sm.h} & & & & \\
-$\beta_{+L}$ & \val{cf.coef.ln_Sm.scd_pos.log_seq_length} & & & & \\
 $\beta_{-L}$ & \val{cf.coef.ln_Sm.scd_neg.log_seq_length} & & & & \\
 $\beta_{\lambda L}$ & \val{cf.coef.ln_Sm.mean_hydro.log_seq_length} & & & & \\
-$\beta_{hL}$ & \val{cf.coef.ln_Sm.h.log_seq_length} & & & & \\
 \bottomrule
 \end{tabular}
 \end{center}

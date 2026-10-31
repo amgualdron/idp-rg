@@ -85,7 +85,7 @@ Dashed line: equality.}
 Validation proteins at the median (\textbf{a}) and 95th percentile (\textbf{b}) of the Kullback--Leibler divergence
 $\mathrm{KL}(p_\mathrm{network}\,\|\,p_\mathrm{closed\,form})$ over the 695 validation proteins, and the protein with the
 largest divergence (\textbf{c}): MD frames (histogram), network (solid) and closed form (dashed). The largest divergence is
-a compact chain that both miss: MD $\langle R_g\rangle=3.05$\,nm, network 2.68\,nm, closed form 2.41\,nm.}
+a compact chain that both miss: MD $\langle R_g\rangle=3.05$\,nm, network 2.68\,nm, closed form 2.39\,nm.}
 \label{fig:cf_examples}
 \end{figure*}
 
@@ -94,11 +94,12 @@ a compact chain that both miss: MD $\langle R_g\rangle=3.05$\,nm, network 2.68\,
 \includegraphics[width=\textwidth]{fig20_surrogate_summary}
 \caption{\textbf{How closely the closed form reproduces the network.}
 \textbf{a--c},~As Fig.~\ref{fig:cf_examples}.
-\textbf{d},~$\mathrm{KL}(p_\mathrm{network}\,\|\,p_\mathrm{closed\,form})$ over the 695 validation proteins: median 0.0020
-nats, 95th percentile 0.031, 99th percentile 0.12; the last bin collects the 30 proteins with $\mathrm{KL}\geq0.04$.
+\textbf{d},~$\mathrm{KL}(p_\mathrm{network}\,\|\,p_\mathrm{closed\,form})$ over the 695 validation proteins: median 0.0019
+nats, 95th percentile 0.031, 99th percentile 0.12; the last bin collects the 31 proteins with $\mathrm{KL}\geq0.04$.
 \textbf{e},~The exponent $\nu$ of the two-exponent distribution: fitted by maximum likelihood to each protein's MD frames
 (filled), predicted by the network (solid) and by the closed form (dashed). Against the fitted values, $R^2=0.72$ for the
-network and 0.61 for the closed form, whose $\nu$ spans a narrower range (0.41--0.75, against 0.41--0.89 fitted).
+network and 0.67 for the closed form. The closed form's $\nu$ spans 0.41--0.89, the same range as the fitted values and wider
+than the network's (0.41--0.82).
 Dashed vertical lines: $\theta$ chain ($\nu=1/2$) and good solvent ($\nu=0.588$).}
 \label{fig:cf_summary}
 \end{figure*}
@@ -111,21 +112,22 @@ Each row varies one input of the closed form over the 1st--99th percentile range
 with the other inputs held at a reference chain (black circle): $N=184$ and $\langle\lambda\rangle=0.603$ (training
 medians), contact energy at the CE threshold $c(N)=c_0+0.25\ln N$ ($-0.128$ at $N=184$; along \textbf{a} the contact
 energy follows $c(N)$), so that $h=0$, and no charge decoration ($s_+=s_-=0$); its $\langle R_g\rangle=4.18$\,nm,
-$\nu=0.607$ and $A=3.32$. Left: change of the mean $\langle R_g\rangle$ (solid), the exponent $\nu$ (dashed) and the
+$\nu=0.606$ and $A=3.33$. Left: change of the mean $\langle R_g\rangle$ (solid), the exponent $\nu$ (dashed) and the
 amplitude $A$ (dotted) of the predicted distribution relative to the reference chain; \textbf{b--e} share their vertical
 axis. Right: $P(R_g)$ at $N=184$ of the chain marked by the diamonds, with one input at the end of its training range
 (1st percentile for $s_-$, 99th for the others), and of the reference chain (grey outline), all on one density scale;
 short vertical line: the chain's mean; dashed line: the reference mean.
-\textbf{a},~Chain length, on a logarithmic axis: $\langle R_g\rangle$ rises from 1.27\,nm at $N=24$ to 6.67\,nm at
-$N=427$, while $\nu$ barely changes (0.628 to 0.599) and $A$ falls with the $1/N$ term of its law (5.44 to 3.13).
+\textbf{a},~Chain length, on a logarithmic axis: $\langle R_g\rangle$ rises from 1.27\,nm at $N=24$ to 6.68\,nm at
+$N=427$, while $\nu$ stays at 0.606, since at $s_+=0$ the exponent does not depend on $N$, and $A$ falls with the $1/N$ term of
+its law (5.05 to 3.21).
 \textbf{b},~$s_-=\min[\operatorname{asinh}(5\,\mathrm{SCD}/N),0]$, negative when opposite charges are segregated into
-blocks; at $s_-=-0.255$, $\langle R_g\rangle$ $-11\%$, $\nu=0.532$, $A=2.77$.
+blocks; at $s_-=-0.255$, $\langle R_g\rangle$ $-11\%$, $\nu=0.540$, $A=2.84$.
 \textbf{c},~$s_+=\max[\operatorname{asinh}(5\,\mathrm{SCD}/N),0]$, positive when like charges dominate; at $s_+=2.25$,
-$\langle R_g\rangle$ $+47\%$, $\nu=0.700$, $A=4.27$.
+$\langle R_g\rangle$ $+48\%$, $\nu=0.702$, $A=4.17$.
 \textbf{d},~Contact energy CE, which enters only above the CE threshold (dotted line, $c(184)$) through
-$h=\max[\mathrm{CE}-c(N),0]$; at $\mathrm{CE}=2.75$, $\langle R_g\rangle$ $-17\%$, $\nu=0.511$, $A=2.63$.
+$h=\max[\mathrm{CE}-c(N),0]$; at $\mathrm{CE}=2.75$, $\langle R_g\rangle$ $-18\%$, $\nu=0.507$, $A=2.63$.
 \textbf{e},~Mean HPS hydropathy $\langle\lambda\rangle$; at
-$\langle\lambda\rangle=0.766$, $\langle R_g\rangle$ $-6\%$, $\nu=0.603$, $A=3.12$.}
+$\langle\lambda\rangle=0.766$, $\langle R_g\rangle$ $-6\%$, $\nu=0.603$, $A=3.13$.}
 \label{fig:cf_response}
 \end{figure*}
 

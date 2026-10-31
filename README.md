@@ -8,7 +8,7 @@ Two predictors share one output distribution:
 
 - **The network** (default): an MLP on nine sequence descriptors, trained by maximum likelihood on the MD frames of
   3,223 proteins.
-- **The closed form**: 24 parameters, linear in four descriptors and ln N, fitted the same way. It is written out in
+- **The closed form**: 21 parameters, linear in four descriptors, ln N and s₊/N, fitted the same way. It is written out in
   full in `paper/closed_form.tex`.
 
 The output is the two-exponent distribution of Victor and Lhuillier. With s = R_g / S_m:
@@ -62,12 +62,12 @@ between the predicted and simulated distributions, as a percentage of ⟨R_g⟩.
 |  | proteins | ⟨R_g⟩ error | σ error | W₁ | NLL per frame |
 |---|---|---|---|---|---|
 | network, validation | 695 | 1.84% | 4.73% | 1.47% | 1.1525 |
-| closed form, validation | 695 | 2.56% | 5.90% | 1.83% | 1.1622 |
+| closed form, validation | 695 | 2.53% | 5.81% | 1.79% | 1.1620 |
 | network, test | 691 | 2.02% | 4.69% | 1.53% | 1.1379 |
-| closed form, test | 691 | 2.55% | 5.10% | 1.86% | 1.1464 |
+| closed form, test | 691 | 2.53% | 5.09% | 1.82% | 1.1462 |
 <!-- /numbers -->
 
-The test split was scored once, after the model was fixed. Further results are in `MODEL.md`:
+The test split was scored once for each released model, after that model was fixed (`data/README.md`). Further results are in `MODEL.md`:
 - length and stickiness extrapolation;
 - an experimental benchmark of 122 proteins with SAXS data;
 - ablations;

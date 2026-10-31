@@ -12,7 +12,7 @@
 
 \title{Summary of the released model\\ \large \texttt{idprg} 1.0: the radius-of-gyration distribution of disordered
 proteins from sequence}
-\date{27 October 2026}
+\date{31 October 2026}
 \author{}
 
 \begin{document}
@@ -88,9 +88,10 @@ No validation or test protein shares a cluster with a training protein.
 \item Model choices were made by cross-validation inside the training split, and on two extrapolation splits carved
   out of it (Section~\ref{sec:extrap}).
 \item The validation split was used to compare final candidates.
-\item The test split was scored once for this model, on 2026-10-27, after everything was fixed. During development it
-  had been opened three times for earlier versions, so it is not entirely unseen. It was never used to fit or select
-  the released model (\texttt{data/README.md}, test-split log).
+\item The test split was scored once for the network, on 2026-10-27, and once for the closed form, on 2026-10-31, each
+  after that model was fixed. It had also been opened for earlier versions, so it is not entirely unseen; the closed form
+  was revised after the test score of its earlier 24-parameter version was known. It was never used to fit the released
+  models (\texttt{data/README.md}, test-split log).
 \end{itemize}
 
 \paragraph{Experimental benchmark.} The benchmark has \val{data.n_benchmark} unique sequences ($N=\val{data.benchmark.N_min}$--\val{data.benchmark.N_max})
@@ -146,9 +147,9 @@ bit (SHA-256 \texttt{\val{net.sha256}\dots}).
 
 \paragraph{Closed form.} The same output distribution, with
 \begin{itemize}
-\item $\ln S_m$ and $u$ linear in $s_+$, $s_-$, $\lam$, $h$ and $\ln N$. $\ln S_m$ also carries the products of the
-  descriptors with $\ln N$ and $(\ln N)^2$.
-\item $\ln A$ on the law $[1,\nu,1/N,\lam,s_+]$.
+\item $\ln S_m$ linear in $s_+$, $s_-$, $\lam$, $h$ and $\ln N$, plus $s_-\ln N$, $\lam\ln N$ and $(\ln N)^2$.
+\item $u$ linear in $s_+$, $s_+/N$, $s_-$, $\lam$ and $h$.
+\item $\ln A$ on the law $[1,\nu,1/N,\lam]$.
 \item $h=\max(\mathrm{CE}-c(N),0)$, the excess of the contact energy over the threshold
   $c(N)=\val{cf.c0}+\val{cf.c1}\ln N$.
 \end{itemize}
@@ -370,9 +371,9 @@ HPS1.
 Over the validation proteins, the median of $\mathrm{KL}(p_{\mathrm{network}}\,\|\,p_{\mathrm{closed\,form}})$ is
 \val{fig.fig20.kl.percentiles.50}~nats, and its 95th percentile is \val{fig.fig20.kl.percentiles.95} (\texttt{fig20}).
 Against the exponents $\nu$ fitted to each protein's frames, $R^2=\val{fig.fig20.nu.r2_network_vs_fitted}$ for the
-network and \val{fig.fig20.nu.r2_closed_form_vs_fitted} for the closed form. The closed form's $\nu$ spans a narrower
-range: \val{fig.fig20.nu.closed_form.min}--\val{fig.fig20.nu.closed_form.max}, against
-\val{fig.fig20.nu.fitted.min}--\val{fig.fig20.nu.fitted.max} fitted. Its largest losses are on compact chains, where
+network and \val{fig.fig20.nu.r2_closed_form_vs_fitted} for the closed form. The closed form's $\nu$ spans
+\val{fig.fig20.nu.closed_form.min}--\val{fig.fig20.nu.closed_form.max}, against
+\val{fig.fig20.nu.fitted.min}--\val{fig.fig20.nu.fitted.max} fitted and \val{fig.fig20.nu.network.min}--\val{fig.fig20.nu.network.max} for the network. Its largest losses are on compact chains, where
 the $\mRg$ error is \pct{cf.val.by.compact.mean_err_pct} against \pct{net.val.by.compact.mean_err_pct} for the network.
 
 %==========================================================================================================

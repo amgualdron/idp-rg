@@ -163,7 +163,7 @@ def main(argv=None):
     p = sub.add_parser("predict", help="<Rg>, sigma, skewness and distribution parameters of sequences")
     p.add_argument("sequence", nargs="*")
     p.add_argument("--fasta")
-    p.add_argument("--closed-form", action="store_true", help="the 24-parameter closed form instead of the network")
+    p.add_argument("--closed-form", action="store_true", help="the 21-parameter closed form instead of the network")
     p.add_argument("--density", help="also write p(Rg) on a 200-point grid per sequence to this CSV")
     p.add_argument("--out", help="CSV (default: stdout)")
     p.set_defaults(fn=cmd_predict)
