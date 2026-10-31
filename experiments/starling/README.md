@@ -220,7 +220,7 @@ have N below the network's stated minimum of 20 and are drawn open in the figure
   retry lowers the batch size, and `summary.csv` records the batch size used.
 - No conformation in the full run failed STARLING's check for impossible distances, so `rg_mean_clean_nm` equals
   `rg_mean_nm`. The 15-residue stath_NTD runs without complaint, but its accuracy is the least certain.
-- `sequence` is used as it stands, including the 131-residue hNHE1cdt. An older copy of the table has a `sequence_table`
-  column that drops that protein's first M. The script accepts the committed `benchmark.csv` and that older copy.
+- `sequence` is used as it stands, including the 131-residue hNHE1cdt. The run read an older copy of `benchmark.csv` with
+  the same names, sequences, SAXS and HPS1 values as the current table, so its results apply unchanged.
 - `psutil` is pinned in `environment.yml` because the `starling` command imports it without declaring it.
 - The documentation lists a `dpmpp` sampler, but 2.0.2 has `ddim`, `ddpm` and `plms`.

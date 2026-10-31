@@ -8,10 +8,12 @@ paper/cache/
 runs/*
 !runs/starling/
 
-# Only the small tables the code reads. The frame store, timeseries and other large files are copied between machines by hand.
+# Only the small tables the code reads and the proteome FASTA. The frame store, timeseries and other large files are copied
+# between machines by hand.
 data/*
 !data/README.md
 !data/benchmark.csv
 !data/benchmark_methods.csv
 !data/md_fits.csv
 !data/proteins.csv
+!data/UP000005640_9606.fasta

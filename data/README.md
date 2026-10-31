@@ -87,13 +87,17 @@ Each row is a unique sequence. Entries that share a sequence are merged and thei
 |---|---|
 | `name` | protein name |
 | `family` | sequence family: proteins linked by sequence similarity ≥ 0.6 or the same composition |
+| `aliases` | other names of the merged literature entries (`;`-separated), empty if none |
+| `n_entries` | number of literature entries merged into this row |
 | `N` | chain length |
 | `saxs_rg_nm` | SAXS R_g from the literature |
 | `hps1_rg_nm` | ⟨R_g⟩ of the protein's HPS1 simulation |
 | `trajectories` | trajectory files of that simulation (`;`-separated) |
+| `n_frames` | total frames in those trajectories |
 | `sequence` | one-letter amino-acid sequence |
 
-The benchmark was not used for any fitting or selection.
+The benchmark was not used for any fitting or selection. For hNHE1cdt, the compiled literature table gives 130 residues, without
+the first M that `sequence` has.
 
 ### `benchmark_methods.csv`: ⟨R_g⟩ of the same 122 proteins from other methods
 
