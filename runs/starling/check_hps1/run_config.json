@@ -1,0 +1,19 @@
+{
+  "conformations": 2000,
+  "steps": 100,
+  "sampler": "ddim",
+  "ionic_strength_mM": 150,
+  "seed": 2026,
+  "starling_version": "2.0.2",
+  "requested_batch_size": 25,
+  "device": "cuda:0",
+  "input": "/home/andres/Research/idp-rg/data/benchmark.csv",
+  "torch_version": "2.6.0+cu124",
+  "torch_cuda": "12.4",
+  "python": "3.11.18",
+  "gpu": "NVIDIA GeForce RTX 3060 Ti",
+  "weights_sha256": {
+    "STARLING_v2.0.0_ViT_VAE_2025_10_14.ckpt": "f373190466250030507c00bdb2bcf7757461c675097621a13aa4a92188949ec5",
+    "STARLING_v2.0.0_ViT_DDPM_2025_10_14.ckpt": "d5642ad5ffce96c5c3f470e3314a8ab80d2d00387b148e2a23b769b9b942af41"
+  }
+}

@@ -1,0 +1,258 @@
+122 proteins in /home/andres/Research/idp-rg/data/benchmark.csv; N 15 to 441
+STARLING 2.0.2: 2000 conformations, ddim, 45 steps, 150 mM, batch 25, device cuda:0
+Output runs/starling/benchmark: 0 finished already, 121 to run now
+NOT SAMPLED: Tau_ht40 has N = 441, over STARLING's limit of 380
+
+Compiling the diffusion model for faster inference, this may take a while...
+This is a one-time operation, subsequent inferences will be MUCH faster.
+
+Compiling with the following options:
+  mode: default
+  fullgraph: False
+  backend: inductor
+  dynamic: None
+Using DDIM sampler
+Model ready in 5.9 s
+Using DDIM sampler
+[1/121] A1_LCD_10R N=137: <Rg> 2.579 +- 0.012 nm, std 0.542 SAXS 2.67; bad 0; 75.2 s, 4698 MiB; 150.3 min left
+Using DDIM sampler
+[2/121] A1_LCD_10R_plus_10K N=137: <Rg> 2.790 +- 0.012 nm, std 0.558 SAXS 2.85; bad 0; 66.3 s, 4584 MiB; 140.2 min left
+Using DDIM sampler
+[3/121] A1_LCD_12F_plus_12Y N=137: <Rg> 2.435 +- 0.011 nm, std 0.510 SAXS 2.60; bad 0; 66.3 s, 4584 MiB; 136.2 min left
+Using DDIM sampler
+[4/121] A1_LCD_12F_plus_12Y10R N=137: <Rg> 2.506 +- 0.011 nm, std 0.509 SAXS 2.61; bad 0; 66.4 s, 4584 MiB; 133.6 min left
+Using DDIM sampler
+[5/121] A1_LCD_3R_plus_3K N=137: <Rg> 2.550 +- 0.012 nm, std 0.523 SAXS 2.63; bad 0; 66.4 s, 4584 MiB; 131.6 min left
+Using DDIM sampler
+[6/121] A1_LCD_4D N=137: <Rg> 2.500 +- 0.011 nm, std 0.507 SAXS 2.64; bad 0; 66.4 s, 4584 MiB; 130.0 min left
+Using DDIM sampler
+[7/121] A1_LCD_6R N=137: <Rg> 2.525 +- 0.011 nm, std 0.514 SAXS 2.57; bad 0; 66.4 s, 4584 MiB; 128.4 min left
+Using DDIM sampler
+[8/121] A1_LCD_6R_plus_6K N=137: <Rg> 2.650 +- 0.012 nm, std 0.531 SAXS 2.79; bad 0; 66.4 s, 4584 MiB; 127.0 min left
+Using DDIM sampler
+[9/121] A1_LCD_8F_plus_4Y N=137: <Rg> 2.637 +- 0.013 nm, std 0.561 SAXS 2.71; bad 0; 66.4 s, 4584 MiB; 125.7 min left
+Using DDIM sampler
+[10/121] A1_LCD_9F_plus_3Y N=137: <Rg> 2.725 +- 0.013 nm, std 0.582 SAXS 2.68; bad 0; 66.4 s, 4584 MiB; 124.4 min left
+Using DDIM sampler
+[11/121] A1_LCD_9F_plus_6Y N=137: <Rg> 2.582 +- 0.012 nm, std 0.547 SAXS 2.66; bad 0; 66.4 s, 4584 MiB; 123.1 min left
+Using DDIM sampler
+[12/121] A1_LCD_aro_ N=137: <Rg> 2.765 +- 0.013 nm, std 0.597 SAXS 2.84; bad 0; 66.4 s, 4584 MiB; 121.9 min left
+Using DDIM sampler
+[13/121] A1_LCD_aro__ N=137: <Rg> 2.999 +- 0.014 nm, std 0.630 SAXS 2.97; bad 0; 66.4 s, 4584 MiB; 120.7 min left
+Using DDIM sampler
+[14/121] A1_LCD_aro_plus_ N=137: <Rg> 2.344 +- 0.011 nm, std 0.506 SAXS 2.43; bad 0; 66.4 s, 4584 MiB; 119.5 min left
+Using DDIM sampler
+[15/121] A1_LCD_NLS N=137: <Rg> 2.489 +- 0.012 nm, std 0.517 SAXS 2.76; bad 0; 66.4 s, 4584 MiB; 118.3 min left
+Using DDIM sampler
+[16/121] A1_LCD_plus_12D N=137: <Rg> 2.606 +- 0.012 nm, std 0.531 SAXS 2.80; bad 0; 66.4 s, 4584 MiB; 117.1 min left
+Using DDIM sampler
+[17/121] A1_LCD_plus_12E N=137: <Rg> 2.625 +- 0.012 nm, std 0.532 SAXS 2.85; bad 0; 66.4 s, 4584 MiB; 115.9 min left
+Using DDIM sampler
+[18/121] A1_LCD_plus_2R N=137: <Rg> 2.513 +- 0.012 nm, std 0.523 SAXS 2.62; bad 0; 66.4 s, 4584 MiB; 114.8 min left
+Using DDIM sampler
+[19/121] A1_LCD_plus_4D N=137: <Rg> 2.514 +- 0.012 nm, std 0.515 SAXS 2.72; bad 0; 66.4 s, 4584 MiB; 113.6 min left
+Using DDIM sampler
+[20/121] A1_LCD_plus_7F_7Y N=137: <Rg> 2.530 +- 0.012 nm, std 0.520 SAXS 2.72; bad 0; 66.4 s, 4584 MiB; 112.5 min left
+Using DDIM sampler
+[21/121] A1_LCD_plus_7K_plus_12Dblocky N=137: <Rg> 2.615 +- 0.012 nm, std 0.531 SAXS 2.56; bad 0; 66.4 s, 4584 MiB; 111.3 min left
+Using DDIM sampler
+[22/121] A1_LCD_plus_7R N=137: <Rg> 2.565 +- 0.012 nm, std 0.534 SAXS 2.71; bad 0; 66.4 s, 4584 MiB; 110.2 min left
+Using DDIM sampler
+[23/121] A1_LCD_plus_7R_plus_10D N=137: <Rg> 2.574 +- 0.012 nm, std 0.522 SAXS 2.92; bad 0; 66.4 s, 4584 MiB; 109.0 min left
+Using DDIM sampler
+[24/121] A1_LCD_plus_8D N=137: <Rg> 2.558 +- 0.012 nm, std 0.516 SAXS 2.69; bad 0; 66.4 s, 4584 MiB; 107.9 min left
+Using DDIM sampler
+[25/121] A1_LCD_plus_NLS N=137: <Rg> 2.496 +- 0.012 nm, std 0.523 SAXS 2.58; bad 0; 66.4 s, 4584 MiB; 106.8 min left
+Using DDIM sampler
+[26/121] A1_LCD10F_plus_7R_plus_12D N=137: <Rg> 2.885 +- 0.013 nm, std 0.599 SAXS 2.86; bad 0; 66.4 s, 4584 MiB; 105.6 min left
+Using DDIM sampler
+[27/121] alpha_syn N=140: <Rg> 3.705 +- 0.017 nm, std 0.738 SAXS 4.10; bad 0; 64.7 s, 4584 MiB; 104.4 min left
+Using DDIM sampler
+[28/121] Ash1 N=83: <Rg> 2.895 +- 0.013 nm, std 0.591 SAXS 2.85; bad 0; 63.7 s, 4578 MiB; 103.1 min left
+Using DDIM sampler
+[29/121] chloroplastic_calvin_cycle_protein N=100: <Rg> 2.900 +- 0.013 nm, std 0.595 SAXS 2.30; bad 0; 62.1 s, 4584 MiB; 101.8 min left
+Using DDIM sampler
+[30/121] CortactinCR N=324: <Rg> 5.076 +- 0.025 nm, std 1.123 SAXS 4.67; bad 0; 76.7 s, 4598 MiB; 101.2 min left
+Using DDIM sampler
+[31/121] CSD1 N=150: <Rg> 4.264 +- 0.019 nm, std 0.842 SAXS 3.54; bad 0; 66.9 s, 4586 MiB; 100.1 min left
+Using DDIM sampler
+[32/121] CTCF_R_WT N=185: <Rg> 4.070 +- 0.019 nm, std 0.857 SAXS 3.25; bad 0; 68.4 s, 4580 MiB; 99.0 min left
+Using DDIM sampler
+[33/121] DARPP_32 N=118: <Rg> 3.310 +- 0.016 nm, std 0.709 SAXS 2.83; bad 0; 65.6 s, 4586 MiB; 97.9 min left
+Using DDIM sampler
+[34/121] ERalpha_NTD N=187: <Rg> 4.056 +- 0.019 nm, std 0.870 SAXS 3.10; bad 0; 68.4 s, 4582 MiB; 96.8 min left
+Using DDIM sampler
+[35/121] Fez1 N=103: <Rg> 3.484 +- 0.014 nm, std 0.611 SAXS 3.60; bad 0; 64.8 s, 4586 MiB; 95.6 min left
+Using DDIM sampler
+[36/121] Fhua N=142: <Rg> 3.520 +- 0.015 nm, std 0.689 SAXS 3.34; bad 0; 66.6 s, 4586 MiB; 94.5 min left
+Using DDIM sampler
+[37/121] GRB14_PIR N=98: <Rg> 2.813 +- 0.014 nm, std 0.611 SAXS 2.70; bad 0; 64.6 s, 4580 MiB; 93.3 min left
+Using DDIM sampler
+[38/121] H1_CTD N=98: <Rg> 3.836 +- 0.015 nm, std 0.693 SAXS 2.50; bad 0; 64.6 s, 4580 MiB; 92.2 min left
+Using DDIM sampler
+[39/121] Heh2_NLS N=46: <Rg> 1.988 +- 0.008 nm, std 0.380 SAXS 2.40; bad 0; 61.6 s, 4580 MiB; 90.9 min left
+Using DDIM sampler
+[40/121] Histatin N=24: <Rg> 1.362 +- 0.005 nm, std 0.229 SAXS 1.41; bad 0; 58.0 s, 4580 MiB; 89.5 min left
+Using DDIM sampler
+[41/121] HIV_TAT N=101: <Rg> 3.106 +- 0.014 nm, std 0.639 SAXS 3.30; bad 0; 64.7 s, 4586 MiB; 88.3 min left
+Using DDIM sampler
+[42/121] HMPV N=61: <Rg> 2.289 +- 0.010 nm, std 0.453 SAXS 2.74; bad 0; 62.2 s, 4578 MiB; 87.1 min left
+Using DDIM sampler
+[43/121] hNHE1cdt N=131: <Rg> 3.778 +- 0.017 nm, std 0.754 SAXS 3.63; bad 0; 66.0 s, 4586 MiB; 86.0 min left
+Using DDIM sampler
+[44/121] HrpO N=148: <Rg> 3.525 +- 0.017 nm, std 0.755 SAXS 3.50; bad 0; 65.0 s, 4586 MiB; 84.8 min left
+Using DDIM sampler
+[45/121] IBB N=99: <Rg> 2.881 +- 0.014 nm, std 0.620 SAXS 3.20; bad 0; 64.6 s, 4578 MiB; 83.7 min left
+Using DDIM sampler
+[46/121] II_1 N=141: <Rg> 3.964 +- 0.019 nm, std 0.849 SAXS 4.10; bad 0; 66.6 s, 4586 MiB; 82.6 min left
+Using DDIM sampler
+[47/121] Ki_1_57 N=292: <Rg> 5.117 +- 0.027 nm, std 1.223 SAXS 4.70; bad 0; 74.1 s, 4598 MiB; 81.7 min left
+Using DDIM sampler
+[48/121] LOX_PP N=147: <Rg> 3.455 +- 0.017 nm, std 0.776 SAXS 3.70; bad 0; 66.8 s, 4586 MiB; 80.6 min left
+Using DDIM sampler
+[49/121] LS N=70: <Rg> 2.905 +- 0.014 nm, std 0.635 SAXS 2.79; bad 0; 62.9 s, 4580 MiB; 79.4 min left
+Using DDIM sampler
+[50/121] Msh6 N=304: <Rg> 5.168 +- 0.026 nm, std 1.155 SAXS 5.60; bad 0; 74.6 s, 4598 MiB; 78.5 min left
+Using DDIM sampler
+[51/121] N98 N=153: <Rg> 3.313 +- 0.016 nm, std 0.713 SAXS 2.86; bad 0; 67.1 s, 4588 MiB; 77.4 min left
+Using DDIM sampler
+[52/121] Neuroligin_3 N=118: <Rg> 3.451 +- 0.016 nm, std 0.735 SAXS 3.30; bad 0; 65.7 s, 4586 MiB; 76.3 min left
+Using DDIM sampler
+[53/121] Nsp1 N=178: <Rg> 3.783 +- 0.018 nm, std 0.786 SAXS 4.10; bad 0; 68.1 s, 4582 MiB; 75.3 min left
+Using DDIM sampler
+[54/121] NTail N=125: <Rg> 3.361 +- 0.016 nm, std 0.696 SAXS 2.72; bad 0; 66.1 s, 4588 MiB; 74.1 min left
+Using DDIM sampler
+[55/121] Nup153_NUL N=114: <Rg> 3.066 +- 0.014 nm, std 0.618 SAXS 3.00; bad 0; 65.5 s, 4586 MiB; 73.0 min left
+Using DDIM sampler
+[56/121] Nup153_NUS N=82: <Rg> 2.783 +- 0.013 nm, std 0.575 SAXS 2.49; bad 0; 63.6 s, 4580 MiB; 71.9 min left
+Using DDIM sampler
+[57/121] Nup1573_frag N=79: <Rg> 2.725 +- 0.013 nm, std 0.581 SAXS 2.40; bad 0; 63.4 s, 4580 MiB; 70.7 min left
+Using DDIM sampler
+[58/121] Nup49 N=38: <Rg> 1.599 +- 0.007 nm, std 0.293 SAXS 1.59; bad 0; 61.2 s, 4580 MiB; 69.5 min left
+Using DDIM sampler
+[59/121] p27_v14 N=107: <Rg> 3.140 +- 0.015 nm, std 0.652 SAXS 2.94; bad 0; 65.1 s, 4586 MiB; 68.4 min left
+Using DDIM sampler
+[60/121] p27_v15 N=107: <Rg> 3.249 +- 0.014 nm, std 0.648 SAXS 2.92; bad 0; 65.1 s, 4586 MiB; 67.3 min left
+Using DDIM sampler
+[61/121] p27_v44 N=107: <Rg> 3.206 +- 0.015 nm, std 0.668 SAXS 2.49; bad 0; 65.1 s, 4586 MiB; 66.1 min left
+Using DDIM sampler
+[62/121] p27_v56 N=107: <Rg> 2.874 +- 0.014 nm, std 0.618 SAXS 2.33; bad 0; 65.1 s, 4586 MiB; 65.0 min left
+Using DDIM sampler
+[63/121] p27_v78 N=107: <Rg> 2.473 +- 0.010 nm, std 0.439 SAXS 2.21; bad 0; 65.1 s, 4586 MiB; 63.9 min left
+Using DDIM sampler
+[64/121] p27_WT_v31 N=107: <Rg> 3.156 +- 0.015 nm, std 0.663 SAXS 2.81; bad 0; 65.1 s, 4586 MiB; 62.8 min left
+Using DDIM sampler
+[65/121] p531_91 N=91: <Rg> 3.133 +- 0.014 nm, std 0.636 SAXS 2.87; bad 0; 64.0 s, 4578 MiB; 61.7 min left
+Using DDIM sampler
+[66/121] PAGE4_WT N=102: <Rg> 3.223 +- 0.015 nm, std 0.660 SAXS 3.62; bad 0; 64.8 s, 4584 MiB; 60.5 min left
+Using DDIM sampler
+[67/121] Pertactin_NTD N=334: <Rg> 5.825 +- 0.028 nm, std 1.255 SAXS 5.13; bad 0; 79.6 s, 4602 MiB; 59.6 min left
+Using DDIM sampler
+[68/121] PNt N=334: <Rg> 5.833 +- 0.028 nm, std 1.230 SAXS 5.11; bad 0; 79.5 s, 4602 MiB; 58.7 min left
+Using DDIM sampler
+[69/121] PPI2 N=156: <Rg> 3.868 +- 0.018 nm, std 0.811 SAXS 3.46; bad 0; 65.4 s, 4580 MiB; 57.6 min left
+Using DDIM sampler
+[70/121] ProTa N=111: <Rg> 3.879 +- 0.016 nm, std 0.722 SAXS 3.79; bad 0; 65.3 s, 4586 MiB; 56.4 min left
+Using DDIM sampler
+[71/121] redAFP N=81: <Rg> 2.533 +- 0.011 nm, std 0.472 SAXS 2.28; bad 0; 63.6 s, 4580 MiB; 55.3 min left
+Using DDIM sampler
+[72/121] Reduced_RnaseH N=124: <Rg> 3.261 +- 0.015 nm, std 0.688 SAXS 3.36; bad 0; 63.2 s, 4586 MiB; 54.2 min left
+Using DDIM sampler
+[73/121] RpII215_gibbs N=75: <Rg> 2.585 +- 0.012 nm, std 0.516 SAXS 2.80; bad 0; 63.3 s, 4580 MiB; 53.0 min left
+Using DDIM sampler
+[74/121] RpII215_portz N=312: <Rg> 5.265 +- 0.027 nm, std 1.220 SAXS 5.18; bad 0; 75.5 s, 4598 MiB; 52.0 min left
+Using DDIM sampler
+[75/121] Sic1 N=92: <Rg> 3.148 +- 0.014 nm, std 0.621 SAXS 3.21; bad 0; 61.4 s, 4580 MiB; 50.9 min left
+Using DDIM sampler
+[76/121] Swap1 N=334: <Rg> 5.873 +- 0.028 nm, std 1.244 SAXS 4.92; bad 0; 79.8 s, 4604 MiB; 49.9 min left
+Using DDIM sampler
+[77/121] Swap3 N=334: <Rg> 5.769 +- 0.027 nm, std 1.212 SAXS 4.06; bad 0; 79.5 s, 4604 MiB; 48.9 min left
+Using DDIM sampler
+[78/121] Swap4 N=334: <Rg> 5.783 +- 0.027 nm, std 1.210 SAXS 5.34; bad 0; 79.5 s, 4604 MiB; 47.9 min left
+Using DDIM sampler
+[79/121] Swap4_1 N=334: <Rg> 5.863 +- 0.028 nm, std 1.266 SAXS 5.45; bad 0; 79.6 s, 4604 MiB; 46.9 min left
+Using DDIM sampler
+[80/121] Swap5 N=334: <Rg> 5.881 +- 0.028 nm, std 1.273 SAXS 4.87; bad 0; 79.5 s, 4604 MiB; 45.9 min left
+Using DDIM sampler
+[81/121] Swap6 N=334: <Rg> 5.841 +- 0.028 nm, std 1.260 SAXS 5.26; bad 0; 79.5 s, 4604 MiB; 44.9 min left
+Using DDIM sampler
+[82/121] Tau_ht23 N=352: <Rg> 6.636 +- 0.032 nm, std 1.410 SAXS 5.30; bad 0; 78.3 s, 4604 MiB; 43.8 min left
+Using DDIM sampler
+[83/121] Tau_ht23_AT8_AT100 N=352: <Rg> 6.621 +- 0.031 nm, std 1.388 SAXS 5.20; bad 0; 78.3 s, 4604 MiB; 42.8 min left
+Using DDIM sampler
+[84/121] Tau_ht23_S214E N=352: <Rg> 6.652 +- 0.033 nm, std 1.467 SAXS 5.40; bad 0; 78.3 s, 4604 MiB; 41.8 min left
+Using DDIM sampler
+[85/121] Tau_K10 N=167: <Rg> 4.179 +- 0.018 nm, std 0.806 SAXS 4.00; bad 0; 67.6 s, 4582 MiB; 40.6 min left
+Using DDIM sampler
+[86/121] Tau_K16 N=175: <Rg> 4.511 +- 0.020 nm, std 0.895 SAXS 3.90; bad 0; 68.0 s, 4582 MiB; 39.5 min left
+Using DDIM sampler
+[87/121] Tau_K17 N=144: <Rg> 4.071 +- 0.018 nm, std 0.811 SAXS 3.60; bad 0; 64.7 s, 4588 MiB; 38.3 min left
+Using DDIM sampler
+[88/121] Tau_K18 N=129: <Rg> 3.657 +- 0.016 nm, std 0.721 SAXS 3.80; bad 0; 65.9 s, 4588 MiB; 37.2 min left
+Using DDIM sampler
+[89/121] Tau_K18_delK280_I277P_I308P N=128: <Rg> 3.667 +- 0.016 nm, std 0.735 SAXS 3.50; bad 0; 63.2 s, 4586 MiB; 36.1 min left
+Using DDIM sampler
+[90/121] Tau_K18_P301L N=129: <Rg> 3.634 +- 0.016 nm, std 0.729 SAXS 3.50; bad 0; 65.9 s, 4588 MiB; 34.9 min left
+Using DDIM sampler
+[91/121] Tau_K19 N=98: <Rg> 3.066 +- 0.013 nm, std 0.583 SAXS 3.50; bad 0; 64.6 s, 4580 MiB; 33.8 min left
+Using DDIM sampler
+[92/121] Tau_K23 N=258: <Rg> 5.443 +- 0.026 nm, std 1.149 SAXS 4.90; bad 0; 74.1 s, 4608 MiB; 32.7 min left
+Using DDIM sampler
+[93/121] Tau_K25 N=185: <Rg> 4.480 +- 0.021 nm, std 0.925 SAXS 4.10; bad 0; 68.3 s, 4582 MiB; 31.6 min left
+Using DDIM sampler
+[94/121] Tau_K27 N=166: <Rg> 4.333 +- 0.020 nm, std 0.883 SAXS 3.70; bad 0; 67.5 s, 4582 MiB; 30.4 min left
+Using DDIM sampler
+[95/121] Tau_K32 N=197: <Rg> 4.778 +- 0.021 nm, std 0.937 SAXS 4.20; bad 0; 68.9 s, 4582 MiB; 29.3 min left
+Using DDIM sampler
+[96/121] Tau_K32_AT8_AT100 N=197: <Rg> 4.769 +- 0.021 nm, std 0.940 SAXS 4.10; bad 0; 68.9 s, 4582 MiB; 28.2 min left
+Using DDIM sampler
+[97/121] VSV_P N=67: <Rg> 2.238 +- 0.011 nm, std 0.472 SAXS 2.40; bad 0; 62.9 s, 4580 MiB; 27.0 min left
+Using DDIM sampler
+[98/121] RS-peptide N=18: <Rg> 1.127 +- 0.004 nm, std 0.168 SAXS 1.26; bad 0; 59.2 s, 4562 MiB; 25.9 min left
+Using DDIM sampler
+[99/121] P1_100 N=100: <Rg> 3.100 +- 0.014 nm, std 0.610 SAXS 2.90; bad 0; 62.1 s, 4586 MiB; 24.7 min left
+Using DDIM sampler
+[100/121] DSS1 N=71: <Rg> 2.583 +- 0.012 nm, std 0.533 SAXS 2.50; bad 0; 62.9 s, 4580 MiB; 23.6 min left
+Using DDIM sampler
+[101/121] NHE6cmdd N=116: <Rg> 3.355 +- 0.015 nm, std 0.680 SAXS 3.20; bad 0; 62.8 s, 4586 MiB; 22.5 min left
+Using DDIM sampler
+[102/121] ANAC046 N=167: <Rg> 3.918 +- 0.017 nm, std 0.783 SAXS 3.60; bad 0; 67.6 s, 4582 MiB; 21.3 min left
+Using DDIM sampler
+[103/121] stath_NTD N=15: <Rg> 0.975 +- 0.003 nm, std 0.154 SAXS 0.91; bad 0; 58.6 s, 4560 MiB; 20.2 min left
+Using DDIM sampler
+[104/121] HeV_PNT3_CTD_200_254 N=77: <Rg> 2.472 +- 0.013 nm, std 0.563 SAXS 2.80; bad 0; 63.2 s, 4578 MiB; 19.1 min left
+Using DDIM sampler
+[105/121] HeV_PNT3_200_310_YYY_AAA N=133: <Rg> 3.605 +- 0.017 nm, std 0.770 SAXS 4.00; bad 0; 66.0 s, 4586 MiB; 17.9 min left
+Using DDIM sampler
+[106/121] HeV_PNT3_200_310_WT N=133: <Rg> 3.502 +- 0.017 nm, std 0.767 SAXS 3.70; bad 0; 66.0 s, 4586 MiB; 16.8 min left
+Using DDIM sampler
+[107/121] NiV_PNT3_200_314_WT N=137: <Rg> 3.557 +- 0.017 nm, std 0.739 SAXS 3.70; bad 0; 66.3 s, 4586 MiB; 15.7 min left
+Using DDIM sampler
+[108/121] red1_288_345 N=70: <Rg> 2.374 +- 0.011 nm, std 0.498 SAXS 2.50; bad 0; 62.9 s, 4578 MiB; 14.6 min left
+Using DDIM sampler
+[109/121] p150L_342_475 N=144: <Rg> 3.787 +- 0.017 nm, std 0.768 SAXS 4.10; bad 0; 64.6 s, 4586 MiB; 13.4 min left
+Using DDIM sampler
+[110/121] E1A_2022 N=114: <Rg> 3.634 +- 0.016 nm, std 0.726 SAXS 3.60; bad 0; 65.4 s, 4586 MiB; 12.3 min left
+Using DDIM sampler
+[111/121] TIF2_624_774 N=150: <Rg> 4.058 +- 0.018 nm, std 0.784 SAXS 3.70; bad 0; 66.8 s, 4586 MiB; 11.2 min left
+Using DDIM sampler
+[112/121] IR_CTD N=173: <Rg> 3.775 +- 0.018 nm, std 0.795 SAXS 3.80; bad 0; 67.9 s, 4580 MiB; 10.1 min left
+Using DDIM sampler
+[113/121] SMAD_linker N=90: <Rg> 3.061 +- 0.014 nm, std 0.608 SAXS 2.90; bad 0; 64.0 s, 4580 MiB; 8.9 min left
+Using DDIM sampler
+[114/121] MenV_LBD N=62: <Rg> 2.448 +- 0.011 nm, std 0.471 SAXS 2.50; bad 0; 62.2 s, 4580 MiB; 7.8 min left
+Using DDIM sampler
+[115/121] syndecan4 N=163: <Rg> 4.270 +- 0.019 nm, std 0.840 SAXS 4.20; bad 0; 67.4 s, 4580 MiB; 6.7 min left
+Using DDIM sampler
+[116/121] N_FATZ_1 N=191: <Rg> 3.945 +- 0.018 nm, std 0.822 SAXS 3.50; bad 0; 68.5 s, 4580 MiB; 5.6 min left
+Using DDIM sampler
+[117/121] DeltaN_FATZ_1 N=209: <Rg> 4.176 +- 0.020 nm, std 0.901 SAXS 3.90; bad 0; 69.6 s, 4600 MiB; 4.5 min left
+Using DDIM sampler
+[118/121] UL11 N=104: <Rg> 2.899 +- 0.014 nm, std 0.642 SAXS 2.40; bad 0; 62.0 s, 4586 MiB; 3.4 min left
+Using DDIM sampler
+[119/121] GON7_NTD N=114: <Rg> 3.192 +- 0.015 nm, std 0.687 SAXS 3.10; bad 0; 65.4 s, 4586 MiB; 2.2 min left
+Using DDIM sampler
+[120/121] Bmal1_CTD_P624A N=98: <Rg> 3.178 +- 0.014 nm, std 0.625 SAXS 2.80; bad 0; 64.6 s, 4580 MiB; 1.1 min left
+Using DDIM sampler
+[121/121] TRF2_BR N=49: <Rg> 1.982 +- 0.008 nm, std 0.366 SAXS 1.70; bad 0; 61.9 s, 4580 MiB; 0.0 min left
+Status: ok 121, too_long 1
