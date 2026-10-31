@@ -3,4 +3,15 @@ __pycache__/
 build/
 .pytest_cache/
 paper/cache/
-runs/
+
+# Only runs/starling is kept: the STARLING benchmark's results and figures.
+runs/*
+!runs/starling/
+
+# Only the small tables the code reads. The frame store, timeseries and other large files are copied between machines by hand.
+data/*
+!data/README.md
+!data/benchmark.csv
+!data/benchmark_methods.csv
+!data/md_fits.csv
+!data/proteins.csv
