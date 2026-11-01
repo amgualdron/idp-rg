@@ -170,13 +170,14 @@ reaches 11.42\%, the two-exponent head 7.38\%.}
 \includegraphics[width=\textwidth]{fig26_starling_shape}
 \caption{\textbf{Shape of the $R_g$ distribution: the network against STARLING.}
 The network is trained on HPS1 and STARLING on Mpipi-GG. Every distribution is divided by its own mean, so size plays no part.
-\textbf{a--c}, Spread $\sigma/\langle R_g\rangle$ and the probabilities of compact ($R_g<0.8\langle R_g\rangle$) and extended
-($R_g>1.3\langle R_g\rangle$) conformations, from the network against STARLING (blue circles) and, for scale, against the HPS1
+\textbf{a--c}, Spread $\sigma/\langle R_g\rangle$ and the probabilities of compact ($R_g<t_c\langle R_g\rangle$) and extended
+($R_g>t_e\langle R_g\rangle$) conformations, where $t_c=0.681+0.311/\sqrt{N}$ and $t_e=1.421-0.571/\sqrt{N}$ are the 5th and 95th percentiles of
+$R_g/\langle R_g\rangle$ of a typical training chain of the same length. From the network against STARLING (blue circles) and, for scale, against the HPS1
 trajectories (green triangles), the force field the network was trained on. Grey band: $\pm1.96$ times the median sampling
 error of a STARLING ensemble (2000 conformations); block resampling puts HPS1's slightly lower. $\rho$: Spearman correlation and MAE over the
 119 proteins with $N\geq20$; open symbols have $N<20$, outside the network's domain.
 \textbf{d--g}, The proteins at the 25th, 50th and 75th percentiles and the largest of the shape $W_1$ between the network and
-STARLING over 121 proteins, as a percentage of $\langle R_g\rangle$: STARLING histogram and network prediction. Dotted lines mark the
-thresholds of \textbf{b} and \textbf{c}.}
+STARLING over 121 proteins, as a percentage of $\langle R_g\rangle$: STARLING histogram and network prediction. Dotted lines mark $t_c$ and $t_e$ at
+that length.}
 \label{fig:starling_shape}
 \end{figure*}

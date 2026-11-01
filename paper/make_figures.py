@@ -783,15 +783,16 @@ STARLING = HERE.parent / "runs" / "starling" / "benchmark"
 SHAPE_U = (np.arange(20000) + 0.5) / 20000
 
 
-def _shape_stats(x):
-    """Shape statistics of a sample over its own mean: spread, P(Rg < 0.8 <Rg>), P(Rg > 1.3 <Rg>)."""
+def _shape_stats(x, N):
+    """Shape statistics of a sample over its own mean: spread and the compact and extended populations at this length."""
     x = x / x.mean()
-    return dict(cv=x.std(ddof=1), pc=np.mean(x < 0.8), pe=np.mean(x > 1.3))
+    tc, te = D.population_bounds(N)
+    return dict(cv=x.std(ddof=1), pc=np.mean(x < tc), pe=np.mean(x > te))
 
 
 def fig26(real):
     """Shape only, network vs STARLING (trained on Mpipi-GG): every distribution over its own mean. (a) sd / mean, (b)
-    P(Rg < 0.8 <Rg>), (c) P(Rg > 1.3 <Rg>), each against STARLING and, for scale, HPS1, with the sampling noise of the
+    P_c, (c) P_e (D.population_bounds), each against STARLING and, for scale, HPS1, with the sampling noise of the
     x axis as a band; (d-g) the proteins at the 25th, 50th, 75th percentiles and the largest shape W1 (score_shape.py's
     shape_w1.csv). The text's nu comes from experiments/starling/fit_nu.py, fitted as fig24 does for MD."""
     samples = np.load(STARLING / "rg_samples.npz")
@@ -807,16 +808,17 @@ def fig26(real):
     assert check < 1e-6, f"cached predictions do not reproduce shape_w1.csv ({check})"
 
     rng = np.random.default_rng(2026)
-    def block_se(x, length=20, n=100):                   # the HPS1 frames are correlated, so resample blocks of them
+    def block_se(x, N, length=20, n=100):                # the HPS1 frames are correlated, so resample blocks of them
         k = int(np.ceil(len(x) / length))
-        return pd.DataFrame([_shape_stats(np.concatenate([x[i:i + length] for i in rng.integers(0, len(x) - length + 1, k)])[:len(x)]) for _ in range(n)]).std(ddof=1)
+        return pd.DataFrame([_shape_stats(np.concatenate([x[i:i + length] for i in rng.integers(0, len(x) - length + 1, k)])[:len(x)], N) for _ in range(n)]).std(ddof=1)
     table = []
     for n in names:
         r, x, h = rows[n], np.asarray(samples[n], float), rows[n]["frames"]
-        star, hps1 = _shape_stats(x), _shape_stats(h)
-        se = pd.DataFrame([_shape_stats(rng.choice(x, len(x))) for _ in range(200)]).std(ddof=1)
-        se_h = block_se(h)
-        table.append(dict(name=n, cv_net=float(t.cv_net[n]), pc_net=float(D.cdf(0.8 * r["mean"], *r["p"])), pe_net=1 - float(D.cdf(1.3 * r["mean"], *r["p"])),
+        tc, te = D.population_bounds(r["length"])
+        star, hps1 = _shape_stats(x, r["length"]), _shape_stats(h, r["length"])
+        se = pd.DataFrame([_shape_stats(rng.choice(x, len(x)), r["length"]) for _ in range(200)]).std(ddof=1)
+        se_h = block_se(h, r["length"])
+        table.append(dict(name=n, cv_net=float(t.cv_net[n]), pc_net=float(D.cdf(tc * r["mean"], *r["p"])), pe_net=1 - float(D.cdf(te * r["mean"], *r["p"])),
                           nu_net=r["p"][2], nu_hps1=float(D.nu_of(mdfit.fit_free(h / h.mean())[2])), nu_star=fits.nu[n],
                           **{f"{k}_star": v for k, v in star.items()}, **{f"{k}_hps1": v for k, v in hps1.items()},
                           **{f"{k}_se_star": se[k] for k in se.index}, **{f"{k}_se_hps1": se_h[k] for k in se_h.index}))
@@ -863,8 +865,8 @@ def fig26(real):
                 transform=ax.transAxes, ha=ha, va=va, fontsize=5.8, linespacing=1.3, zorder=5)
 
     scatter(a, "cv", (0.08, 0.25), [0.10, 0.15, 0.20, 0.25], r"reference $\sigma/\langle R_g\rangle$", r"network $\sigma/\langle R_g\rangle$", "spread", (0.97, 0.03, "right", "bottom"))
-    scatter(b, "pc", (0.0, 0.28), [0, 0.1, 0.2], "reference", "network", r"compact: $P(R_g<0.8\langle R_g\rangle)$", (0.03, 0.97, "left", "top"))
-    scatter(c, "pe", (0.0, 0.15), [0, 0.05, 0.10, 0.15], "reference", "network", r"extended: $P(R_g>1.3\langle R_g\rangle)$", (0.03, 0.97, "left", "top"))
+    scatter(b, "pc", (0.0, 0.13), [0, 0.05, 0.10], "reference", "network", r"compact: $P_c=P(R_g<t_c\langle R_g\rangle)$", (0.03, 0.97, "left", "top"))
+    scatter(c, "pe", (0.0, 0.11), [0, 0.05, 0.10], "reference", "network", r"extended: $P_e=P(R_g>t_e\langle R_g\rangle)$", (0.03, 0.97, "left", "top"))
     mark = lambda **k: Line2D([], [], ls="", ms=3, **k)
     c.legend(handles=[mark(marker="o", color=MODEL, label="STARLING"), mark(marker="^", color=MOSS, label="HPS1"), mark(marker="o", mfc="white", mec=INK2, label="N < 20")],
              loc="lower right", handletextpad=0.1, borderaxespad=0, labelspacing=0.15, fontsize=6)
@@ -877,7 +879,7 @@ def fig26(real):
         r, smp = rows[n], samples[n]
         ax.hist(smp / smp.mean(), bins=bins, density=True, color=MODEL, alpha=0.45, histtype="stepfilled", linewidth=0, zorder=1)
         ax.plot(x, pdf(x * r["mean"], r["p"]) * r["mean"], zorder=2, **NET_STYLE)
-        for th in (0.8, 1.3):
+        for th in D.population_bounds(r["length"]):
             ax.axvline(th, color=INK2, lw=0.5, ls=":", zorder=3)
         ax.set_xlim(0.4, 2.2); ax.set_title(display_name(n).replace("chloroplastic calvin cycle protein", "chloroplastic Calvin\ncycle protein"), loc="left", pad=3, fontsize=6.5, linespacing=1.05)
         rank = f"largest of {len(o)}" if pc == 100 else f"{pc}th percentile"
@@ -889,7 +891,7 @@ def fig26(real):
     for ax in hist_axes:
         ax.set_ylim(0, top * 1.05)
     hist_axes[0].set_ylabel("probability density")
-    fig.legend(handles=[Patch(facecolor=MODEL, alpha=0.45, label="STARLING"), Line2D([], [], label="network prediction", **NET_STYLE), Line2D([], [], color=INK2, lw=0.5, ls=":", label=r"$0.8$ and $1.3\,\langle R_g\rangle$")],
+    fig.legend(handles=[Patch(facecolor=MODEL, alpha=0.45, label="STARLING"), Line2D([], [], label="network prediction", **NET_STYLE), Line2D([], [], color=INK2, lw=0.5, ls=":", label=r"$t_c$ and $t_e$")],
                loc="outside lower center", ncol=3, handlelength=1.5, columnspacing=1.6, fontsize=6.5)
     for ax, letter in zip([a, b, c] + hist_axes, "abcdefg"):
         panel_label(ax, letter, x=-0.12 if letter in "abc" else -0.1, y=1.03)

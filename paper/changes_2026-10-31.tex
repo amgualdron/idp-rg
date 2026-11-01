@@ -352,7 +352,7 @@ Every distribution is divided by its own mean, so only shape is compared (Figure
 \small
 \begin{tabular}{@{}l r r r@{}}
 \toprule
-& $\sigma/\mRg$ & $P(\Rg<0.8\mRg)$ & $P(\Rg>1.3\mRg)$\\
+& $\sigma/\mRg$ & $P_c$ & $P_e$\\
 \midrule
 median, STARLING & \val{fig.fig26.median_pct.cv_star}\% & \pct{fig.fig26.median_pct.pc_star} & \pct{fig.fig26.median_pct.pe_star}\\
 median, network & \val{fig.fig26.median_pct.cv_net}\% & \pct{fig.fig26.median_pct.pc_net} & \pct{fig.fig26.median_pct.pe_net}\\
@@ -376,7 +376,7 @@ and the largest, p27\_v78, \pct{fig.fig26.shape_pct.max}. The spread of $\Rg$ wi
 \paragraph{Mostly a shape proteins share.} One shape averaged from the HPS1 trajectories of other families matches STARLING with a median $W_1$ of \pct{fig.fig26.shape_pct.shared}. The network is closer than that on only \val{fig.fig26.beats_shared} of \val{fig.fig26.n} proteins. That a shape built from HPS1 alone
 matches a model trained on another force field supports the common shape being robust; it also means that a small $W_1$ says little about any one protein. \pct{fig.fig26.shape_pct.above_floor} of the network--STARLING $W_1$ values exceed the 95th percentile of the noise, so the differences are real though small.
 
-\paragraph{What separates proteins transfers partly.} Against HPS1, its training force field, the network reaches $\rho$ of \val{fig.fig26.pe.rho_hps1} to \val{fig.fig26.cv.rho_hps1}. Against STARLING $\rho$ is about half of that, and about half of the noise limit on all three measures. The tail probabilities largely follow the spread (in STARLING, $\rho=\val{fig.fig26.tails_vs_spread_rho.pc}$ and \val{fig.fig26.tails_vs_spread_rho.pe}), so they do not test asymmetry.
+\paragraph{What separates proteins transfers partly.} Against HPS1, its training force field, the network reaches $\rho$ of \val{fig.fig26.pe.rho_hps1} for $P_e$ and \val{fig.fig26.cv.rho_hps1} for the spread. Against STARLING it is about half of that. For $P_c$ the network does not rank these proteins against either force field ($\rho$ of \val{fig.fig26.pc.rho_hps1} and \val{fig.fig26.pc.rho}, noise limit \val{fig.fig26.pc.noise_ceiling_rho}). In STARLING the probabilities follow the spread only in part ($\rho=\val{fig.fig26.tails_vs_spread_rho.pc}$ and \val{fig.fig26.tails_vs_spread_rho.pe}).
 
 \subsection{The exponent, and why a poor \texorpdfstring{$\nu$}{nu} correlation can coexist with a small \texorpdfstring{$W_1$}{W1}}
 The exponent does test asymmetry, and it agrees less. Fitted to the STARLING ensembles with $\ln A$ free (\texttt{experiments/starling/fit\_nu.py}, the fit \texttt{fig24} uses for MD), $\nu$ correlates with the network's at $\rho=\val{fig.fig26.nu.rho}$
@@ -400,7 +400,9 @@ Three designs were tried and dropped before the final one.
 \item \textbf{$\nu$ scatter.} Replaced by the tail probabilities; its result stays in the text above.
 \item \textbf{Bowley skewness.} $(q_{75}+q_{25}-2q_{50})/(q_{75}-q_{25})$ was tried as an asymmetry measure and was noisier than $\nu$ relative to its signal. The median sampling error of 0.032 exceeds the network's spread of 0.016, and noise limits $\rho$ to 0.33. The observed $\rho$ was $-0.01$ against STARLING and 0.29 against HPS1. Its 87\% inside the band reflects a band of $\pm0.062$ wider than nearly all the data, not agreement.
 \end{itemize}
-Choosing a panel after seeing that $\nu$ looked poor is a selection, which is why the $\nu$ result remains in the text. The thresholds 0.8 and 1.3 were chosen before these panels were computed and were not tuned.
+Choosing a panel after seeing that $\nu$ looked poor is a selection, which is why the $\nu$ result remains in the text.
+
+The first version used fixed thresholds of 0.8 and 1.3 times $\mRg$, chosen before the panels were computed. On 2026-11-01 they were replaced by $t_c$ and $t_e$, the length-matched 5th and 95th percentiles of a typical training chain (\texttt{proteome/populations.py}). That choice was made after these panels had been seen, using the validation proteins and the benchmark, without the test split. The fixed thresholds gave a network--HPS1 $\rho$ of 0.69 for the compact probability, but 0.44 with length removed, because the probability rises with $N$. The depth trades prediction against information: on the benchmark, the compact-tail $\rho$ with length removed is 0.13 at the 5th percentile and 0.42 at the 15th, while the 15th percentile is nearly a measure of spread in MD ($\rho=0.90$, against 0.79). On the larger validation set the depth makes no difference among low-charge chains (0.52 and 0.49), so the 5th percentile was kept. Those numbers are literal, not macros.
 
 \subsection{What can be claimed}
 The common shape is robust to the choice of these two force fields; a protein's departure from it is not shown to be. Three limits apply.

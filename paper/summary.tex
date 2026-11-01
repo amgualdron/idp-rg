@@ -385,10 +385,12 @@ comparison is of shape alone (Figure~\ref{fig:starling_shape}).
 The shapes are close. The median $W_1$ between the network and STARLING is \pct{fig.fig26.shape_pct.median} of $\mRg$
 (family-bootstrap 95\% interval \val{fig.fig26.shape_pct.ci.0}--\val{fig.fig26.shape_pct.ci.1}; sampling alone gives
 \val{fig.fig26.shape_pct.floor}), the 90th percentile is \pct{fig.fig26.shape_pct.p90} and the largest \pct{fig.fig26.shape_pct.max}.
-The spread of $R_g$ within a protein, measured the same way, is \pct{fig.fig26.width_pct}. The two also put about the same share of
-conformations in compact and extended states: median $P(R_g<0.8\mRg)$ of \pct{fig.fig26.median_pct.pc_star} for STARLING and
-\pct{fig.fig26.median_pct.pc_net} for the network, and median $P(R_g>1.3\mRg)$ of \pct{fig.fig26.median_pct.pe_star} and
-\pct{fig.fig26.median_pct.pe_net}, with mean absolute differences of \val{fig.fig26.pc.mae} and \val{fig.fig26.pe.mae}.
+The spread of $R_g$ within a protein, measured the same way, is \pct{fig.fig26.width_pct}. We call a conformation compact if $R_g<t_c\mRg$ and extended if $R_g>t_e\mRg$, with $t_c=0.681+0.311/\sqrt{N}$ and
+$t_e=1.421-0.571/\sqrt{N}$: the 5th and 95th percentiles of $R_g/\mRg$ of a typical training chain of the same length, so that such a chain has
+5\% of its conformations in each state at any $N$. A fixed ratio of $\mRg$ would not do this, because the spread grows with $N$ and most of
+the variation in the probabilities would then be length. The two models put about the same share of conformations in these states: median
+$P_c$ of \pct{fig.fig26.median_pct.pc_star} for STARLING and \pct{fig.fig26.median_pct.pc_net} for the network, and median $P_e$ of
+\pct{fig.fig26.median_pct.pe_star} and \pct{fig.fig26.median_pct.pe_net}, with mean absolute differences of \val{fig.fig26.pc.mae} and \val{fig.fig26.pe.mae}.
 
 The agreement is mostly in the shape the proteins share, not in what separates them. One shape averaged from the HPS1
 trajectories of other families matches STARLING with a median $W_1$ of \pct{fig.fig26.shape_pct.shared}, and the network is closer
@@ -396,8 +398,9 @@ than that on only \val{fig.fig26.beats_shared} of \val{fig.fig26.n} proteins. Pr
 network and STARLING is \val{fig.fig26.cv.rho} for the spread (interval \val{fig.fig26.cv.rho_ci.0}--\val{fig.fig26.cv.rho_ci.1}),
 \val{fig.fig26.pc.rho} for the compact probability (\val{fig.fig26.pc.rho_ci.0}--\val{fig.fig26.pc.rho_ci.1}) and \val{fig.fig26.pe.rho} for the extended probability
 (\val{fig.fig26.pe.rho_ci.0}--\val{fig.fig26.pe.rho_ci.1}), against \val{fig.fig26.cv.rho_hps1}, \val{fig.fig26.pc.rho_hps1} and \val{fig.fig26.pe.rho_hps1} between the network and its own force field,
-HPS1. Sampling noise alone would allow about \val{fig.fig26.pc.noise_ceiling_rho} for the probabilities. These probabilities largely follow the spread (in STARLING,
-$\rho=\val{fig.fig26.tails_vs_spread_rho.pc}$ and \val{fig.fig26.tails_vs_spread_rho.pe}), so they do not test asymmetry. The exponent does, and it agrees less: the two-exponent $\nu$ fitted to the
+HPS1. Sampling noise alone would allow about \val{fig.fig26.pc.noise_ceiling_rho} for $P_c$ and \val{fig.fig26.pe.noise_ceiling_rho} for $P_e$. So the network does not rank these proteins by compact population,
+against either force field: it predicts nearly the same $P_c$ for all of them. It does rank them by extended population against HPS1. In STARLING the probabilities follow the spread only in part
+($\rho=\val{fig.fig26.tails_vs_spread_rho.pc}$ for $P_c$ and \val{fig.fig26.tails_vs_spread_rho.pe} for $P_e$). The exponent tests asymmetry directly, and it agrees less: the two-exponent $\nu$ fitted to the
 STARLING ensembles correlates with the network's at $\rho=\val{fig.fig26.nu.rho}$ (\val{fig.fig26.nu.rho_ci.0}--\val{fig.fig26.nu.rho_ci.1}), against \val{fig.fig26.nu.rho_hps1} for the same fit to HPS1, mostly
 because of the \val{fig.fig26.n_a1} A1-LCD variants (median $\nu$ \val{fig.fig26.nu.a1_star} against \val{fig.fig26.nu.a1_net}, skewness \val{fig.fig26.nu.a1_skew_star} against \val{fig.fig26.nu.a1_skew_net}); without them
 $\rho=\val{fig.fig26.nu.rho_rest}$ (\val{fig.fig26.nu.rho_rest_ci.0}--\val{fig.fig26.nu.rho_rest_ci.1}). Normalizing by size therefore does not remove the force field entirely, and

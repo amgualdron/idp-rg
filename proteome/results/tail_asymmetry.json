@@ -1,0 +1,196 @@
+{
+ "n_chains": 27915,
+ "n_val": 695,
+ "replicate_noise_sd_ln_ratio": 0.1762159472345221,
+ "replicate_pairs": 40,
+ "ratio_quantiles_proteome": {
+  "0.01": 0.7455668553406386,
+  "0.05": 0.9100553237531125,
+  "0.25": 1.0071730076018046,
+  "0.5": 1.0486072392550663,
+  "0.75": 1.1090852495220611,
+  "0.95": 1.303614082786019,
+  "0.99": 2.0780411258693183
+ },
+ "ratio_quantiles_validation_md": {
+  "0.01": 0.49597809774908974,
+  "0.05": 0.7423784786119938,
+  "0.25": 0.8908200638356415,
+  "0.5": 0.9958847736625515,
+  "0.75": 1.110213916177525,
+  "0.95": 2.2525065083850864,
+  "0.99": 4.819264428750033
+ },
+ "network_against_md": {
+  "rho": 0.4723189296209906,
+  "sd_network": 0.27438202920717625,
+  "sd_md": 0.48348878887836155
+ },
+ "closed_form_against_md": {
+  "rho": 0.413548423131076,
+  "sd_closed_form": 0.24877254033774773
+ },
+ "rho_axes": {
+  "proteome_network": {
+   "s": -0.7086266236720867,
+   "CE": 0.11662384400025413,
+   "length": -0.2784790519263303
+  },
+  "validation_md": {
+   "s": -0.3512602377735732,
+   "CE": 0.3626791303082759,
+   "length": 0.09437877884915227
+  }
+ },
+ "rho_with_size": {
+  "proteome_network": -0.6457795901482097,
+  "validation_md": -0.48264461306221
+ },
+ "hydropathy_at_fixed_s_CE_length": {
+  "note": "Spearman correlation with mean hydropathy after removing the mean in cells of s, CE and length",
+  "size": {
+   "md_training": -0.43954318343472015,
+   "md_validation": -0.2564340188101495,
+   "network_validation": -0.293297042296721,
+   "closed_form_validation": -0.37970716888931605,
+   "network_proteome": -0.5796554160117534
+  },
+  "shape": {
+   "md_training": -0.008494500264286617,
+   "md_validation": -0.06483304983904882,
+   "network_validation": -0.1496163798741922,
+   "closed_form_validation": -0.16947708796620484,
+   "network_proteome": 0.2159967159837727,
+   "closed_form_proteome": -0.2578232978878727
+  }
+ },
+ "regions": {
+  "blocky_sticky": {
+   "proteome_share": 0.019595199713415726,
+   "proteome_network_median": 1.8464605470827518,
+   "validation_proteins": 19,
+   "validation_md_median": 2.796242774566474,
+   "validation_network_median": 1.7231427606009897
+  },
+  "like_charged_weak": {
+   "proteome_share": 0.02446713236611141,
+   "proteome_network_median": 0.8259282225981707,
+   "validation_proteins": 21,
+   "validation_md_median": 0.7202472952086553,
+   "validation_network_median": 0.801335259753404
+  },
+  "middle": {
+   "proteome_share": 0.6224968654845066,
+   "proteome_network_median": 1.0577973133972214,
+   "validation_proteins": 231,
+   "validation_md_median": 0.9890310786106034,
+   "validation_network_median": 1.0081982918856471
+  }
+ },
+ "outside_axes": {
+  "proteome": 148,
+  "validation": 30
+ },
+ "outside_colors": {
+  "proteome": 480,
+  "validation": 62
+ },
+ "named": {
+  "\u03b1-synuclein": {
+   "chain": "P37840",
+   "s": -0.05542982369661331,
+   "CE": -0.14941711723804474,
+   "ratio": 1.0564150431272636
+  },
+  "FUS N-term": {
+   "chain": "P35637_idr1",
+   "s": -0.008626000955700874,
+   "CE": -0.13978078961372375,
+   "ratio": 0.9909015364405191
+  },
+  "prothymosin-\u03b1": {
+   "chain": "P06454",
+   "s": 1.3862932920455933,
+   "CE": -0.04655396193265915,
+   "ratio": 0.7918326299848804
+  },
+  "CENP-B IDR": {
+   "chain": "P07199_idr2",
+   "s": 2.1815311908721924,
+   "CE": -0.4310148358345032,
+   "ratio": 0.7533333033407037
+  },
+  "TRIM33 IDR": {
+   "chain": "Q9UPN9_idr5",
+   "s": -0.24420540034770966,
+   "CE": 0.9957226514816284,
+   "ratio": 3.1535641459708916
+  }
+ },
+ "largest_ratio": [
+  {
+   "chain": "Q9UPN9_idr5",
+   "gene": "TRIM33",
+   "N": 41,
+   "s": -0.24420540034770966,
+   "CE": 0.9957226514816284,
+   "ratio": 3.1535641459708916
+  },
+  {
+   "chain": "Q8TDN6_idr1",
+   "gene": "BRIX1",
+   "N": 47,
+   "s": -0.2534011900424957,
+   "CE": 0.8512284755706787,
+   "ratio": 2.4607664538544167
+  },
+  {
+   "chain": "Q86WA8_idr1",
+   "gene": "LONP2",
+   "N": 44,
+   "s": -0.20756776630878448,
+   "CE": 0.8999624848365784,
+   "ratio": 2.44442427502942
+  },
+  {
+   "chain": "O95714_idr4",
+   "gene": "HERC2",
+   "N": 51,
+   "s": -0.20211432874202728,
+   "CE": 1.0238451957702637,
+   "ratio": 2.429550035928942
+  },
+  {
+   "chain": "Q8IVL6_idr4",
+   "gene": "P3H3",
+   "N": 46,
+   "s": -0.19247348606586456,
+   "CE": 1.008535385131836,
+   "ratio": 2.371214580676059
+  },
+  {
+   "chain": "Q70Z53_idr2",
+   "gene": "FRA10AC1",
+   "N": 90,
+   "s": -0.25020313262939453,
+   "CE": 0.8172736763954163,
+   "ratio": 2.334371272700446
+  },
+  {
+   "chain": "P53805_idr2",
+   "gene": "RCAN1",
+   "N": 45,
+   "s": -0.1787569224834442,
+   "CE": 0.9342922568321228,
+   "ratio": 2.2927715593817157
+  },
+  {
+   "chain": "Q9HCF6_idr2",
+   "gene": "TRPM3",
+   "N": 38,
+   "s": -0.2276172786951065,
+   "CE": 0.4428618252277374,
+   "ratio": 2.2345734564856023
+  }
+ ]
+}
